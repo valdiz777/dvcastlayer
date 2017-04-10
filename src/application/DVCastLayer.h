@@ -65,10 +65,9 @@ protected:
 
     DVCast* preparemyWSM(std::string name, int lengthBits, t_channel channel,
             int priority, int rcvId, int serial);
-    void onHeartBeatReceived(DVCast* wsm);
+    void onHello(DVCast* wsm);
     void onMyMessage(DVCast* wsm);
     void send_WSM(DVCast* wsm);
-    void send_Message(DVCast* wsm);
     void neigbors_tables(Coord senderPosition, int senderId);
 };
 

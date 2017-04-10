@@ -26,9 +26,6 @@ using Veins::AnnotationManagerAccess;
 const simsignalwrap_t DVCastLayer::parkingStateChangedSignal = simsignalwrap_t(
 TRACI_SIGNAL_PARKING_CHANGE_NAME);
 
-// control when to send heartbeat
-bool sendHeartBeat;
-
 Define_Module(DVCastLayer);
 void DVCastLayer::initialize(int stage) {
     BaseWaveApplLayer::initialize(stage);
@@ -54,6 +51,25 @@ void DVCastLayer::initialize(int stage) {
 void DVCastLayer::onBeacon(WaveShortMessage* wsm) {
 }
 
+
+// route messages manually, bypass wsm routing to on data automatically
+void DVCastLayer::handleLowerMsg(cMessage* msg) {
+
+    WaveShortMessage* wsm = dynamic_cast<WaveShortMessage*>(msg);
+    EV << "****handleLowerMsg" << endl;
+    if (std::string(wsm->getName()) == "data") {
+		ASSERT(wsm);
+        onData(wsm);
+    } else if (std::string(wsm->getName()) == "hello") {
+		DVCast* dv_wsm = dynamic_cast<DVCast*>(wsm);
+		ASSERT(dv_wsm);
+        onHello(dv_wsm);
+    } else {
+        DBG << "unknown message (" << wsm->getName() << ")  received\n";
+    }
+    delete (msg);
+}
+
 // received accident data, process dv-cast
 void DVCastLayer::onData(WaveShortMessage* wsm) {
     EV << "****onData" << endl;
@@ -64,8 +80,23 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
 
     if (mobility->getRoadId()[0] != ':')
         traciVehicle->changeRoute(wsm->getWsmData(), 9999);
-    if (!sentMessage) /*** start here to process dvcast and do broadcast suppression**/
+    if (!sentMessage) /*** start here to process dvcast and do broadcast suppression ***/
         sendMessage(wsm->getWsmData());//right now no broadcast suppression
+		
+	/*EV << "****executing dv-cast plan" << endl;
+    if (!NB_FRONT.empty()) {        // MDC equals 1
+        EV << "I sent the message : " << NB_FRONT.top() << endl;
+        wsm->setRecipientAddress(NB_FRONT.top());
+        sendDelayedDown(wsm, individualOffset);
+    } else {
+        if (!NB_OPPOSITE.empty()) { // ODC equals 1
+            EV << "I sent the message : " << NB_OPPOSITE.top() << endl;
+            wsm->setRecipientAddress(NB_OPPOSITE.top());
+            sendDelayedDown(wsm, individualOffset);
+        } else {
+            EV << "Send_Message No message sent" << endl;
+        }
+    }*/
 }
 
 void DVCastLayer::sendMessage(std::string blockedRoadId) {
@@ -107,7 +138,7 @@ void DVCastLayer::handleParkingUpdate(cObject* obj) {
     }
 }
 
-// send heartbeats evertime we move
+// send hellos evertime we move 50 meters in x or y
 void DVCastLayer::handlePositionUpdate(cObject* obj) {
     BaseWaveApplLayer::handlePositionUpdate(obj);
 
@@ -115,8 +146,8 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
     dlasty += std::abs(mobility->getCurrentPosition().y - lasty);
 
     if ((dlastx >= 50) || (dlasty >= 50)) {
-        DVCast* wsm = preparemyWSM("heartbeat", beaconLengthBits, type_CCH,
-                beaconPriority, 0, 2);
+        DVCast* wsm = preparemyWSM("hello", beaconLengthBits, type_CCH,
+                beaconPriority, -1, 72);
         send_WSM(wsm);
         dlastx = (dlastx > 50) ? 0 : dlastx;
         dlasty = (dlasty > 50) ? 0 : dlasty;
@@ -136,7 +167,7 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
     lasty = mobility->getCurrentPosition().y;
 }
 
-void TraCIDemo11p::sendWSM(WaveShortMessage* wsm) {
+void DVCastLayer::sendWSM(WaveShortMessage* wsm) {
     if (isParking && !sendWhileParking) return;
     sendDelayedDown(wsm,individualOffset);
 }
@@ -149,24 +180,9 @@ void DVCastLayer::send_WSM(DVCast* wsm) {
     sendDelayedDown(wsm, individualOffset);
 }
 
-// route messages manually
-void DVCastLayer::handleLowerMsg(cMessage* msg) {
-
-    DVCast* wsm = dynamic_cast<DVCast*>(msg);
-    ASSERT(wsm);
-    EV << "****handleLowerMsg" << endl;
-    if (std::string(wsm->getName()) == "data") {
-        onData(wsm);
-    } else if (std::string(wsm->getName()) == "heartbeat") {
-        onHeartBeatReceived(wsm);
-    } else {
-        DBG << "unknown message (" << wsm->getName() << ")  received\n";
-    }
-    delete (msg);
-}
-
-void DVCastLayer::onHeartBeatReceived(DVCast* wsm) {
-    EV << "****onHeartBeatReceived" << endl;
+// Received periodic hello from possible neighbors, update neighborhood table
+void DVCastLayer::onHello(DVCast* wsm) {
+    EV << "****onHello" << endl;
     EV << "My Position x:" << mobility->getCurrentPosition().x
               << " My Position y:" << mobility->getCurrentPosition().y
               << " My Position z:" << mobility->getCurrentPosition().z
@@ -180,36 +196,6 @@ void DVCastLayer::onHeartBeatReceived(DVCast* wsm) {
             && mobility->getCurrentPosition().x > wsm->getRoi_down().x
             && mobility->getCurrentPosition().y > wsm->getRoi_down().y) {
         neigbors_tables(wsm->getSenderPos(), wsm->getSenderAddress());
-    }
-}
-
-// dvcast flow chart
-void DVCastLayer::onMyMessage(DVCast* wsm) {
-    EV << "****onMyMessage" << endl;
-    EV << "Recipient Address " << wsm->getRecipientAddress() << " My Id "
-              << getParentModule()->getIndex() << endl;
-
-    /*if (wsm->getRecipientAddress() == getParentModule()->getIndex()) { // DFlg equals 1
-     EV << "The message reached its destination" << endl;
-     } else {
-     send_Message(wsm);
-     }*/
-}
-
-void DVCastLayer::send_Message(DVCast* wsm) {
-    EV << "****Send_Message" << endl;
-    if (!NB_FRONT.empty()) {        // MDC equals 1
-        EV << "I sent the message : " << NB_FRONT.top() << endl;
-        wsm->setRecipientAddress(NB_FRONT.top());
-        sendDelayedDown(wsm, individualOffset);
-    } else {
-        if (!NB_OPPOSITE.empty()) { // ODC equals 1
-            EV << "I sent the message : " << NB_OPPOSITE.top() << endl;
-            wsm->setRecipientAddress(NB_OPPOSITE.top());
-            sendDelayedDown(wsm, individualOffset);
-        } else {
-            EV << "Send_Message No message sent" << endl;
-        }
     }
 }
 
@@ -305,8 +291,8 @@ DVCast* DVCastLayer::preparemyWSM(std::string name, int lengthBits,
                    << wsm->getTimestamp() << std::endl;
     }
 
-    if (name == "heartbeat") {
-        DBG << "Creating Heartbeat with Priority " << priority
+    if (name == "hello") {
+        DBG << "Creating Hello with Priority " << priority
                    << " at Applayer at " << wsm->getTimestamp() << std::endl;
         wsm->setRoi_up(Coord(curPosition.x + 50, curPosition.y + 50));
         wsm->setRoi_up(Coord(curPosition.x - 50, curPosition.y - 50));
