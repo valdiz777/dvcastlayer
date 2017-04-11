@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.0 from DVCast.msg.
+// Generated file, do not edit! Created by nedtool 5.0 from messages/DVCast.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -166,10 +166,7 @@ Register_Class(DVCast);
 DVCast::DVCast(const char *name, int kind) : ::WaveShortMessage(name,kind)
 {
     this->id = 0;
-    this->lastx = 0;
-    this->lasty = 0;
-    this->dlastx = 0;
-    this->dlasty = 0;
+    this->angle = 0;
 }
 
 DVCast::DVCast(const DVCast& other) : ::WaveShortMessage(other)
@@ -194,10 +191,7 @@ void DVCast::copy(const DVCast& other)
     this->id = other.id;
     this->roi_up = other.roi_up;
     this->roi_down = other.roi_down;
-    this->lastx = other.lastx;
-    this->lasty = other.lasty;
-    this->dlastx = other.dlastx;
-    this->dlasty = other.dlasty;
+    this->angle = other.angle;
 }
 
 void DVCast::parsimPack(omnetpp::cCommBuffer *b) const
@@ -206,10 +200,7 @@ void DVCast::parsimPack(omnetpp::cCommBuffer *b) const
     doParsimPacking(b,this->id);
     doParsimPacking(b,this->roi_up);
     doParsimPacking(b,this->roi_down);
-    doParsimPacking(b,this->lastx);
-    doParsimPacking(b,this->lasty);
-    doParsimPacking(b,this->dlastx);
-    doParsimPacking(b,this->dlasty);
+    doParsimPacking(b,this->angle);
 }
 
 void DVCast::parsimUnpack(omnetpp::cCommBuffer *b)
@@ -218,10 +209,7 @@ void DVCast::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->id);
     doParsimUnpacking(b,this->roi_up);
     doParsimUnpacking(b,this->roi_down);
-    doParsimUnpacking(b,this->lastx);
-    doParsimUnpacking(b,this->lasty);
-    doParsimUnpacking(b,this->dlastx);
-    doParsimUnpacking(b,this->dlasty);
+    doParsimUnpacking(b,this->angle);
 }
 
 int DVCast::getId() const
@@ -254,44 +242,14 @@ void DVCast::setRoi_down(const Coord& roi_down)
     this->roi_down = roi_down;
 }
 
-double DVCast::getLastx() const
+double DVCast::getAngle() const
 {
-    return this->lastx;
+    return this->angle;
 }
 
-void DVCast::setLastx(double lastx)
+void DVCast::setAngle(double angle)
 {
-    this->lastx = lastx;
-}
-
-double DVCast::getLasty() const
-{
-    return this->lasty;
-}
-
-void DVCast::setLasty(double lasty)
-{
-    this->lasty = lasty;
-}
-
-double DVCast::getDlastx() const
-{
-    return this->dlastx;
-}
-
-void DVCast::setDlastx(double dlastx)
-{
-    this->dlastx = dlastx;
-}
-
-double DVCast::getDlasty() const
-{
-    return this->dlasty;
-}
-
-void DVCast::setDlasty(double dlasty)
-{
-    this->dlasty = dlasty;
+    this->angle = angle;
 }
 
 class DVCastDescriptor : public omnetpp::cClassDescriptor
@@ -358,7 +316,7 @@ const char *DVCastDescriptor::getProperty(const char *propertyname) const
 int DVCastDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 7+basedesc->getFieldCount() : 7;
+    return basedesc ? 4+basedesc->getFieldCount() : 4;
 }
 
 unsigned int DVCastDescriptor::getFieldTypeFlags(int field) const
@@ -374,11 +332,8 @@ unsigned int DVCastDescriptor::getFieldTypeFlags(int field) const
         FD_ISCOMPOUND,
         FD_ISCOMPOUND,
         FD_ISEDITABLE,
-        FD_ISEDITABLE,
-        FD_ISEDITABLE,
-        FD_ISEDITABLE,
     };
-    return (field>=0 && field<7) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<4) ? fieldTypeFlags[field] : 0;
 }
 
 const char *DVCastDescriptor::getFieldName(int field) const
@@ -393,12 +348,9 @@ const char *DVCastDescriptor::getFieldName(int field) const
         "id",
         "roi_up",
         "roi_down",
-        "lastx",
-        "lasty",
-        "dlastx",
-        "dlasty",
+        "angle",
     };
-    return (field>=0 && field<7) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<4) ? fieldNames[field] : nullptr;
 }
 
 int DVCastDescriptor::findField(const char *fieldName) const
@@ -408,10 +360,7 @@ int DVCastDescriptor::findField(const char *fieldName) const
     if (fieldName[0]=='i' && strcmp(fieldName, "id")==0) return base+0;
     if (fieldName[0]=='r' && strcmp(fieldName, "roi_up")==0) return base+1;
     if (fieldName[0]=='r' && strcmp(fieldName, "roi_down")==0) return base+2;
-    if (fieldName[0]=='l' && strcmp(fieldName, "lastx")==0) return base+3;
-    if (fieldName[0]=='l' && strcmp(fieldName, "lasty")==0) return base+4;
-    if (fieldName[0]=='d' && strcmp(fieldName, "dlastx")==0) return base+5;
-    if (fieldName[0]=='d' && strcmp(fieldName, "dlasty")==0) return base+6;
+    if (fieldName[0]=='a' && strcmp(fieldName, "angle")==0) return base+3;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -428,11 +377,8 @@ const char *DVCastDescriptor::getFieldTypeString(int field) const
         "Coord",
         "Coord",
         "double",
-        "double",
-        "double",
-        "double",
     };
-    return (field>=0 && field<7) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<4) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **DVCastDescriptor::getFieldPropertyNames(int field) const
@@ -488,10 +434,7 @@ std::string DVCastDescriptor::getFieldValueAsString(void *object, int field, int
         case 0: return long2string(pp->getId());
         case 1: {std::stringstream out; out << pp->getRoi_up(); return out.str();}
         case 2: {std::stringstream out; out << pp->getRoi_down(); return out.str();}
-        case 3: return double2string(pp->getLastx());
-        case 4: return double2string(pp->getLasty());
-        case 5: return double2string(pp->getDlastx());
-        case 6: return double2string(pp->getDlasty());
+        case 3: return double2string(pp->getAngle());
         default: return "";
     }
 }
@@ -507,10 +450,7 @@ bool DVCastDescriptor::setFieldValueAsString(void *object, int field, int i, con
     DVCast *pp = (DVCast *)object; (void)pp;
     switch (field) {
         case 0: pp->setId(string2long(value)); return true;
-        case 3: pp->setLastx(string2double(value)); return true;
-        case 4: pp->setLasty(string2double(value)); return true;
-        case 5: pp->setDlastx(string2double(value)); return true;
-        case 6: pp->setDlasty(string2double(value)); return true;
+        case 3: pp->setAngle(string2double(value)); return true;
         default: return false;
     }
 }

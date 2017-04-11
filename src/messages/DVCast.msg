@@ -30,8 +30,5 @@ packet DVCast extends WaveShortMessage {
     int id;
     Coord roi_up;
     Coord roi_down;
-    double lastx;
-    double lasty;
-    double dlastx;
-    double dlasty;
+    double angle;
 }

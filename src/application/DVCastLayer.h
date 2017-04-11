@@ -25,6 +25,7 @@
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include "messages/DVCast_m.h"
+#include "deque"
 
 using Veins::TraCIMobility;
 using Veins::TraCICommandInterface;
@@ -44,12 +45,13 @@ protected:
     TraCICommandInterface::Vehicle* traciVehicle;
     AnnotationManager* annotations;
     simtime_t lastDroveAt;
+
     double lasty = 0;
     double lastx = 0;
     double dlasty = 0;
     double dlastx = 0;
-    std::priority_queue<int> NB_FRONT, NB_BACK, NB_OPPOSITE;
-    std::priority_queue<DVCast*> myData;
+    std::deque<int> NB_FRONT, NB_BACK, NB_OPPOSITE;
+    std::deque<DVCast*> myData;
     bool sentMessage;
     bool isParking;
     bool sendWhileParking;
@@ -66,9 +68,8 @@ protected:
     DVCast* preparemyWSM(std::string name, int lengthBits, t_channel channel,
             int priority, int rcvId, int serial);
     void onHello(DVCast* wsm);
-    void onMyMessage(DVCast* wsm);
-    void send_WSM(DVCast* wsm);
-    void neigbors_tables(Coord senderPosition, int senderId);
+    void sendHello(DVCast* wsm);
+    void neigbors_tables(Coord senderPosition, int senderId, int senderAngle);
 };
 
 #endif

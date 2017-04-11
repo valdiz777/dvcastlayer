@@ -1,1 +1,1 @@
--DWITH_TKENV -DXMLPARSER=libxml -DWITH_PARSIM -DWITH_NETBUILDER  -g -Wall   -isystem /usr/include -isystem /mingw32/include -Wno-deprecated-register -fno-stack-protector  -IC:/veins-veins-4.4/src -I. -Iapplication -Imessages -IC:/omnetpp-5.0/include
+-DWITH_QTENV -DWITH_OSG -DWITH_TKENV -DXMLPARSER=libxml -DWITH_PARSIM -DWITH_NETBUILDER  -g -Wall   -isystem /usr/include -isystem /mingw32/include -Wno-deprecated-register -fno-stack-protector  -IC:/veins-veins-4.4/src -I. -Iapplication -Imessages -IC:/omnetpp-5.0/include

@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.0 from DVCast.msg.
+// Generated file, do not edit! Created by nedtool 5.0 from messages/DVCast.msg.
 //
 
 #ifndef __DVCAST_M_H
@@ -21,7 +21,7 @@
 // }}
 
 /**
- * Class generated from <tt>DVCast.msg:29</tt> by nedtool.
+ * Class generated from <tt>messages/DVCast.msg:29</tt> by nedtool.
  * <pre>
  * //
  * // TODO generated message class
@@ -31,10 +31,7 @@
  *     int id;
  *     Coord roi_up;
  *     Coord roi_down;
- *     double lastx;
- *     double lasty;
- *     double dlastx;
- *     double dlasty;
+ *     double angle;
  * }
  * </pre>
  */
@@ -44,10 +41,7 @@ class DVCast : public ::WaveShortMessage
     int id;
     Coord roi_up;
     Coord roi_down;
-    double lastx;
-    double lasty;
-    double dlastx;
-    double dlasty;
+    double angle;
 
   private:
     void copy(const DVCast& other);
@@ -74,14 +68,8 @@ class DVCast : public ::WaveShortMessage
     virtual Coord& getRoi_down();
     virtual const Coord& getRoi_down() const {return const_cast<DVCast*>(this)->getRoi_down();}
     virtual void setRoi_down(const Coord& roi_down);
-    virtual double getLastx() const;
-    virtual void setLastx(double lastx);
-    virtual double getLasty() const;
-    virtual void setLasty(double lasty);
-    virtual double getDlastx() const;
-    virtual void setDlastx(double dlastx);
-    virtual double getDlasty() const;
-    virtual void setDlasty(double dlasty);
+    virtual double getAngle() const;
+    virtual void setAngle(double angle);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const DVCast& obj) {obj.parsimPack(b);}

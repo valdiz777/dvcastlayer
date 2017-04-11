@@ -26,6 +26,10 @@ using Veins::AnnotationManagerAccess;
 const simsignalwrap_t DVCastLayer::parkingStateChangedSignal = simsignalwrap_t(
 TRACI_SIGNAL_PARKING_CHANGE_NAME);
 
+// Utility functions
+void clean_queue(std::deque<int> * queue);
+int to_positive_angle(double angle);
+
 Define_Module(DVCastLayer);
 void DVCastLayer::initialize(int stage) {
     BaseWaveApplLayer::initialize(stage);
@@ -51,18 +55,17 @@ void DVCastLayer::initialize(int stage) {
 void DVCastLayer::onBeacon(WaveShortMessage* wsm) {
 }
 
-
 // route messages manually, bypass wsm routing to on data automatically
 void DVCastLayer::handleLowerMsg(cMessage* msg) {
 
     WaveShortMessage* wsm = dynamic_cast<WaveShortMessage*>(msg);
     EV << "****handleLowerMsg" << endl;
     if (std::string(wsm->getName()) == "data") {
-		ASSERT(wsm);
+        ASSERT(wsm);
         onData(wsm);
     } else if (std::string(wsm->getName()) == "hello") {
-		DVCast* dv_wsm = dynamic_cast<DVCast*>(wsm);
-		ASSERT(dv_wsm);
+        DVCast* dv_wsm = dynamic_cast<DVCast*>(wsm);
+        ASSERT(dv_wsm);
         onHello(dv_wsm);
     } else {
         DBG << "unknown message (" << wsm->getName() << ")  received\n";
@@ -81,22 +84,22 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
     if (mobility->getRoadId()[0] != ':')
         traciVehicle->changeRoute(wsm->getWsmData(), 9999);
     if (!sentMessage) /*** start here to process dvcast and do broadcast suppression ***/
-        sendMessage(wsm->getWsmData());//right now no broadcast suppression
-		
-	/*EV << "****executing dv-cast plan" << endl;
-    if (!NB_FRONT.empty()) {        // MDC equals 1
-        EV << "I sent the message : " << NB_FRONT.top() << endl;
-        wsm->setRecipientAddress(NB_FRONT.top());
-        sendDelayedDown(wsm, individualOffset);
-    } else {
-        if (!NB_OPPOSITE.empty()) { // ODC equals 1
-            EV << "I sent the message : " << NB_OPPOSITE.top() << endl;
-            wsm->setRecipientAddress(NB_OPPOSITE.top());
-            sendDelayedDown(wsm, individualOffset);
-        } else {
-            EV << "Send_Message No message sent" << endl;
-        }
-    }*/
+        sendMessage(wsm->getWsmData()); //right now no broadcast suppression
+
+    /*EV << "****executing dv-cast plan" << endl;
+     if (!NB_FRONT.empty()) {        // MDC equals 1
+     EV << "I sent the message : " << NB_FRONT.top() << endl;
+     wsm->setRecipientAddress(NB_FRONT.top());
+     sendDelayedDown(wsm, individualOffset);
+     } else {
+     if (!NB_OPPOSITE.empty()) { // ODC equals 1
+     EV << "I sent the message : " << NB_OPPOSITE.top() << endl;
+     wsm->setRecipientAddress(NB_OPPOSITE.top());
+     sendDelayedDown(wsm, individualOffset);
+     } else {
+     EV << "Send_Message No message sent" << endl;
+     }
+     }*/
 }
 
 void DVCastLayer::sendMessage(std::string blockedRoadId) {
@@ -148,7 +151,7 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
     if ((dlastx >= 50) || (dlasty >= 50)) {
         DVCast* wsm = preparemyWSM("hello", beaconLengthBits, type_CCH,
                 beaconPriority, -1, 72);
-        send_WSM(wsm);
+        sendHello(wsm);
         dlastx = (dlastx > 50) ? 0 : dlastx;
         dlasty = (dlasty > 50) ? 0 : dlasty;
     }
@@ -168,11 +171,12 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
 }
 
 void DVCastLayer::sendWSM(WaveShortMessage* wsm) {
-    if (isParking && !sendWhileParking) return;
-    sendDelayedDown(wsm,individualOffset);
+    if (isParking && !sendWhileParking)
+        return;
+    sendDelayedDown(wsm, individualOffset);
 }
 
-void DVCastLayer::send_WSM(DVCast* wsm) {
+void DVCastLayer::sendHello(DVCast* wsm) {
 
     if (isParking && !sendWhileParking)
         return;
@@ -182,80 +186,113 @@ void DVCastLayer::send_WSM(DVCast* wsm) {
 
 // Received periodic hello from possible neighbors, update neighborhood table
 void DVCastLayer::onHello(DVCast* wsm) {
+    findHost()->getDisplayString().updateWith("r=16,yellow");
+    annotations->scheduleErase(1,
+            annotations->drawLine(wsm->getSenderPos(),
+                    mobility->getPositionAt(simTime()), "blue"));
     EV << "****onHello" << endl;
     EV << "My Position x:" << mobility->getCurrentPosition().x
               << " My Position y:" << mobility->getCurrentPosition().y
               << " My Position z:" << mobility->getCurrentPosition().z
-              << " My Id: " << getParentModule()->getIndex() << endl;
+              << " My Id: " << getParentModule()->getIndex() << " angle: "
+              << to_positive_angle(mobility->getAngleRad()) << endl;
     EV << "Sender Position x:" << wsm->getSenderPos().x << " Sender Position y:"
               << wsm->getSenderPos().y << " Sender Position z:"
               << wsm->getSenderPos().z << " Sender id: "
-              << wsm->getSenderAddress() << endl;
+              << wsm->getSenderAddress() << " angle: "
+              << to_positive_angle(wsm->getAngle()) << endl;
     if (mobility->getCurrentPosition().x < wsm->getRoi_up().x
             && mobility->getCurrentPosition().y < wsm->getRoi_up().y
             && mobility->getCurrentPosition().x > wsm->getRoi_down().x
             && mobility->getCurrentPosition().y > wsm->getRoi_down().y) {
-        neigbors_tables(wsm->getSenderPos(), wsm->getSenderAddress());
+        neigbors_tables(wsm->getSenderPos(), wsm->getSenderAddress(),
+                to_positive_angle(wsm->getAngle()));
     }
 }
 
 //Main algorithm used to decide MDC, OPC, and Dflg
-void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId) {
+void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
+        int senderAngle) {
     EV << "**********neigbors_tables Message has arrived MyId:"
               << getParentModule()->getIndex() << " SenderId:" << senderId
               << endl;
-    /*EV << "My Position x:" << mobility->getCurrentPosition().x
-     << " My Position y:" << mobility->getCurrentPosition().y
-     << " My Position z:" << mobility->getCurrentPosition().z
-     << " My Id: " << getParentModule()->getIndex() << endl;
-     EV << "Sender Position x:" << wsm->getSenderPos().x << " Sender Position y:"
-     << wsm->getSenderPos().y << " Sender Position z:"
-     << wsm->getSenderPos().z << " Sender id: "
-     << wsm->getSenderAddress() << endl;*/
-    if (mobility->getCurrentPosition().y > 2000) {
-        if (senderPosition.y < 6000) {
-            EV << "ID" << getParentModule()->getIndex() << "NBOPPOSITE"
-                      << senderId << endl;
-            NB_OPPOSITE.push(senderId);
-        } else {
-            if (senderPosition.x < mobility->getCurrentPosition().x) {
-                EV << "ID " << getParentModule()->getIndex() << " NBFRONT "
-                          << senderId << endl;
-                NB_FRONT.push(senderId);
-            }
+
+    int angleDiff = std::abs(
+            senderAngle - to_positive_angle(mobility->getAngleRad()));
+    if (angleDiff > 180)
+        angleDiff = 360 - angleDiff;
+
+    if (angleDiff <= 45) {
+        // same direction, calculate front and back
+        if ((senderAngle >= 0 && senderAngle < 45)
+                || (senderAngle >= 315 && senderAngle < 360)) {
+            //east
             if (senderPosition.x > mobility->getCurrentPosition().x) {
-                EV << "ID" << getParentModule()->getIndex() << " NBBACK "
-                          << senderId << endl;
-                NB_BACK.push(senderId);
+                NB_FRONT.push_back(senderId);
+            } else {
+                NB_BACK.push_back(senderId);
             }
-        }
-    } else {        // car is travelling through the right side
-        if (senderPosition.y > 2000) {
-            EV << "ID" << getParentModule()->getIndex() << " NBOPPOSITE "
-                      << senderId << endl;
-            if (NB_OPPOSITE.size() == 5) { // For ensuring five of stack size
-                NB_OPPOSITE.pop();
+
+            clean_queue(&NB_FRONT);
+            clean_queue(&NB_BACK);
+
+        } else if ((senderAngle >= 45 && senderAngle < 90)
+                || (senderAngle >= 90 && senderAngle < 135)) {
+            //north
+            if (senderPosition.y > mobility->getCurrentPosition().y) {
+                NB_FRONT.push_back(senderId);
+            } else {
+                NB_BACK.push_back(senderId);
             }
-            NB_OPPOSITE.push(senderId);
-        } else {
-            if (senderPosition.x > mobility->getCurrentPosition().x) {
-                EV << "ID " << getParentModule()->getIndex() << " NBFRONT "
-                          << senderId << endl;
-                if (NB_OPPOSITE.size() == 5) { // For ensuring five of stack size
-                    NB_OPPOSITE.pop();
-                }
-                NB_FRONT.push(senderId);
-            }
+
+            clean_queue(&NB_FRONT);
+            clean_queue(&NB_BACK);
+
+        } else if ((senderAngle >= 135 && senderAngle < 180)
+                || (senderAngle >= 180 && senderAngle < 225)) {
+            // west
             if (senderPosition.x < mobility->getCurrentPosition().x) {
-                EV << "ID" << getParentModule()->getIndex() << " NBBACK "
-                          << senderId << endl;
-                if (NB_OPPOSITE.size() == 5) { // For ensuring five of stack size
-                    NB_OPPOSITE.pop();
-                }
-                NB_BACK.push(senderId);
+                NB_FRONT.push_back(senderId);
+            } else {
+                NB_BACK.push_back(senderId);
             }
+
+            clean_queue(&NB_FRONT);
+            clean_queue(&NB_BACK);
+
+        } else if ((senderAngle >= 225 && senderAngle < 270)
+                || (senderAngle >= 270 && senderAngle < 315)) {
+            // south
+            if (senderPosition.y < mobility->getCurrentPosition().y) {
+                NB_FRONT.push_back(senderId);
+            } else {
+                NB_BACK.push_back(senderId);
+            }
+
+            clean_queue(&NB_FRONT);
+            clean_queue(&NB_BACK);
+
         }
+
+    } else if (angleDiff > 90 && angleDiff <= 180) {
+        // opposite direction
+        NB_OPPOSITE.push_back(senderId);
+        clean_queue(&NB_OPPOSITE);
     }
+
+    EV << "NB_FRONT [ ";
+    for (std::deque<int>::const_iterator i = NB_FRONT.begin();
+            i != NB_FRONT.end(); ++i)
+        EV << *i << ' ';
+    EV << "]" << endl << " NB_BACK [ ";
+    for (std::deque<int>::const_iterator i = NB_BACK.begin();
+            i != NB_BACK.end(); ++i)
+        EV << *i << ' ';
+    EV << "]" << endl << " NB_OPPOSITE [ ";
+    for (std::deque<int>::const_iterator i = NB_OPPOSITE.begin();
+            i != NB_OPPOSITE.end(); ++i)
+        EV << *i << ' ';
+    EV << "]" << endl;
 }
 
 DVCast* DVCastLayer::preparemyWSM(std::string name, int lengthBits,
@@ -292,18 +329,29 @@ DVCast* DVCastLayer::preparemyWSM(std::string name, int lengthBits,
     }
 
     if (name == "hello") {
-        DBG << "Creating Hello with Priority " << priority
-                   << " at Applayer at " << wsm->getTimestamp() << std::endl;
+        DBG << "Creating Hello with Priority " << priority << " at Applayer at "
+                   << wsm->getTimestamp() << std::endl;
         wsm->setRoi_up(Coord(curPosition.x + 50, curPosition.y + 50));
-        wsm->setRoi_up(Coord(curPosition.x - 50, curPosition.y - 50));
-        wsm->setDlastx(dlastx);
-        wsm->setDlasty(dlasty);
-        wsm->setLastx(lastx);
-        wsm->setLasty(lasty);
+        wsm->setRoi_down(Coord(curPosition.x - 50, curPosition.y - 50));
         wsm->setKind(3);
+        wsm->setAngle(mobility->getAngleRad());
     }
 
     wsm->setId(getParentModule()->getIndex());
-    EV << " PARENT MODULE IS " << getParentModule()->getIndex();
     return wsm;
+}
+
+int to_positive_angle(double angle) {
+    angle = (180 / 3.14) * angle;
+    angle = fmod(angle, 360);
+    if (angle < 0)
+        angle += 360;
+    return (int) angle;
+}
+
+void clean_queue(std::deque<int> * queue) {
+// For ensuring MAXnb = 5
+    if (queue->size() == 5) {
+        queue->pop_front();
+    }
 }
