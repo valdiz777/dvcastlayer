@@ -25,7 +25,6 @@
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include "messages/DVCast_m.h"
-#include "deque"
 
 using Veins::TraCIMobility;
 using Veins::TraCICommandInterface;
@@ -51,25 +50,38 @@ protected:
     double dlasty = 0;
     double dlastx = 0;
     std::deque<int> NB_FRONT, NB_BACK, NB_OPPOSITE;
-    std::deque<DVCast*> myData;
-    bool sentMessage;
+    std::deque<int> rcvdMessages;
+    std::map<int, WaveShortMessage*> delayedRB;
+    bool sentAccidentMessage;
     bool isParking;
     bool sendWhileParking;
     static const simsignalwrap_t parkingStateChangedSignal;
 protected:
     virtual void onBeacon(WaveShortMessage* wsm);
     virtual void onData(WaveShortMessage* wsm);
-    void sendMessage(std::string blockedRoadId);
     virtual void handlePositionUpdate(cObject* obj);
     virtual void handleParkingUpdate(cObject* obj);
     virtual void handleLowerMsg(cMessage* msg);
     virtual void sendWSM(WaveShortMessage* wsm);
 
-    DVCast* preparemyWSM(std::string name, int lengthBits, t_channel channel,
-            int priority, int rcvId, int serial);
     void onHello(DVCast* wsm);
-    void sendHello(DVCast* wsm);
     void neigbors_tables(Coord senderPosition, int senderId, int senderAngle);
+    void sendHello(DVCast* wsm);
+    void sendMessage(std::string blockedRoadId, int recipient, int serial);
+    DVCast* prepareHello(std::string name, int lengthBits, t_channel channel,
+            int priority, int rcvId, int serial);
+public:
+
+
 };
 
+template<class InputIterator, class T>
+static InputIterator find(InputIterator first, InputIterator last, const T& val) {
+        while (first != last) {
+            if (*first == val)
+                return first;
+            ++first;
+        }
+        return last;
+    }
 #endif

@@ -29,6 +29,9 @@ TRACI_SIGNAL_PARKING_CHANGE_NAME);
 // Utility functions
 void clean_queue(std::deque<int> * queue);
 int to_positive_angle(double angle);
+bool contains(std::deque<int> * queue, int key);
+
+int clusterRadius = 250;
 
 Define_Module(DVCastLayer);
 void DVCastLayer::initialize(int stage) {
@@ -41,7 +44,7 @@ void DVCastLayer::initialize(int stage) {
         annotations = AnnotationManagerAccess().getIfExists();
         ASSERT(annotations);
 
-        sentMessage = false;
+        sentAccidentMessage = false;
         lastDroveAt = simTime();
         findHost()->subscribe(parkingStateChangedSignal, this);
         isParking = false;
@@ -76,39 +79,44 @@ void DVCastLayer::handleLowerMsg(cMessage* msg) {
 // received accident data, process dv-cast
 void DVCastLayer::onData(WaveShortMessage* wsm) {
     EV << "****onData" << endl;
-    findHost()->getDisplayString().updateWith("r=16,green");
-    annotations->scheduleErase(1,
-            annotations->drawLine(wsm->getSenderPos(),
-                    mobility->getPositionAt(simTime()), "blue"));
 
-    if (mobility->getRoadId()[0] != ':')
-        traciVehicle->changeRoute(wsm->getWsmData(), 9999);
-    if (!sentMessage) /*** start here to process dvcast and do broadcast suppression ***/
-        sendMessage(wsm->getWsmData()); //right now no broadcast suppression
+    if (rcvdMessages.empty() || !contains(&rcvdMessages, wsm->getSerial())) {
+        // this is a new message, add to received message queue
+        rcvdMessages.push_back(wsm->getSerial());
+        findHost()->getDisplayString().updateWith("r=16,green");
+        annotations->scheduleErase(1,
+                annotations->drawLine(wsm->getSenderPos(),
+                        mobility->getPositionAt(simTime()), "blue"));
 
-    /*EV << "****executing dv-cast plan" << endl;
-     if (!NB_FRONT.empty()) {        // MDC equals 1
-     EV << "I sent the message : " << NB_FRONT.top() << endl;
-     wsm->setRecipientAddress(NB_FRONT.top());
-     sendDelayedDown(wsm, individualOffset);
-     } else {
-     if (!NB_OPPOSITE.empty()) { // ODC equals 1
-     EV << "I sent the message : " << NB_OPPOSITE.top() << endl;
-     wsm->setRecipientAddress(NB_OPPOSITE.top());
-     sendDelayedDown(wsm, individualOffset);
-     } else {
-     EV << "Send_Message No message sent" << endl;
-     }
-     }*/
+        bool ODC = (NB_OPPOSITE.size() > 0) ? true : false;
+        bool Dflg =
+                (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
+                        true : false;
+        bool MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+
+        EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
+
+        if (!MDC) {
+            // no broadcast suppression
+            if (ODC) {
+                sendMessage(wsm->getWsmData(), -1, wsm->getSerial());
+                if (!Dflg) {
+                    findHost()->getDisplayString().updateWith("r=16,blue");
+                }
+            } else {
+                findHost()->getDisplayString().updateWith("r=16,pink");
+            }
+        }
+    }
 }
 
-void DVCastLayer::sendMessage(std::string blockedRoadId) {
+void DVCastLayer::sendMessage(std::string blockedRoadId, int recipient,
+        int serial) {
     EV << "****sendMessage" << endl;
-    sentMessage = true; //won't be needed after we switch to dv-cast
 
     t_channel channel = dataOnSch ? type_SCH : type_CCH;
     WaveShortMessage* wsm = prepareWSM("data", dataLengthBits, channel,
-            dataPriority, -1, 2);
+            dataPriority, recipient, 2);
     wsm->setWsmData(blockedRoadId.c_str());
     sendWSM(wsm);
 }
@@ -144,24 +152,27 @@ void DVCastLayer::handleParkingUpdate(cObject* obj) {
 // send hellos evertime we move 50 meters in x or y
 void DVCastLayer::handlePositionUpdate(cObject* obj) {
     BaseWaveApplLayer::handlePositionUpdate(obj);
+    //sentAccidentMessage = (sentAccidentMessage) ? false : true;
 
     dlastx += std::abs(mobility->getCurrentPosition().x - lastx);
     dlasty += std::abs(mobility->getCurrentPosition().y - lasty);
 
-    if ((dlastx >= 50) || (dlasty >= 50)) {
-        DVCast* wsm = preparemyWSM("hello", beaconLengthBits, type_CCH,
+    if ((dlastx >= clusterRadius / 2) || (dlasty >= clusterRadius / 2)) {
+        DVCast* wsm = prepareHello("hello", beaconLengthBits, type_CCH,
                 beaconPriority, -1, 72);
         sendHello(wsm);
-        dlastx = (dlastx > 50) ? 0 : dlastx;
-        dlasty = (dlasty > 50) ? 0 : dlasty;
+        dlastx = (dlastx > clusterRadius / 2) ? 0 : dlastx;
+        dlasty = (dlasty > clusterRadius / 2) ? 0 : dlasty;
     }
 
     if (mobility->getSpeed() < 1) {
         // stopped for for at least 10s?
         if (simTime() - lastDroveAt >= 10) {
             findHost()->getDisplayString().updateWith("r=16,red");
-            if (!sentMessage)
-                sendMessage(mobility->getRoadId());
+            if (!sentAccidentMessage) {
+                sendMessage(mobility->getRoadId(), -1, rand() % 101);
+                sentAccidentMessage = true;
+            }
         }
     } else {
         lastDroveAt = simTime();
@@ -295,7 +306,7 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
     EV << "]" << endl;
 }
 
-DVCast* DVCastLayer::preparemyWSM(std::string name, int lengthBits,
+DVCast* DVCastLayer::prepareHello(std::string name, int lengthBits,
         t_channel channel, int priority, int rcvId, int serial) {
     EV << "****preparemyWSM" << endl;
     DVCast* wsm = new DVCast(name.c_str(), 0);
@@ -331,8 +342,12 @@ DVCast* DVCastLayer::preparemyWSM(std::string name, int lengthBits,
     if (name == "hello") {
         DBG << "Creating Hello with Priority " << priority << " at Applayer at "
                    << wsm->getTimestamp() << std::endl;
-        wsm->setRoi_up(Coord(curPosition.x + 50, curPosition.y + 50));
-        wsm->setRoi_down(Coord(curPosition.x - 50, curPosition.y - 50));
+        wsm->setRoi_up(
+                Coord(curPosition.x + clusterRadius,
+                        curPosition.y + clusterRadius));
+        wsm->setRoi_down(
+                Coord(curPosition.x - clusterRadius,
+                        curPosition.y - clusterRadius));
         wsm->setKind(3);
         wsm->setAngle(mobility->getAngleRad());
     }
@@ -354,4 +369,9 @@ void clean_queue(std::deque<int> * queue) {
     if (queue->size() == 5) {
         queue->pop_front();
     }
+}
+
+bool contains(std::deque<int> * queue, int key) {
+    return (find(queue->begin(), queue->end(), key) != queue->end()) ?
+            true : false;
 }
