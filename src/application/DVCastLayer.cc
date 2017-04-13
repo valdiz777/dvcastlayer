@@ -309,6 +309,8 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         clean_queue(&NB_OPPOSITE);
     }
 
+    MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+
     EV << "NB_FRONT [ ";
     for (std::deque<int>::const_iterator i = NB_FRONT.begin();
             i != NB_FRONT.end(); ++i)
@@ -322,8 +324,6 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
             i != NB_OPPOSITE.end(); ++i)
         EV << *i << ' ';
     EV << "]" << endl;
-
-    MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
     if (!delayedRB.empty() && !ODC && !NB_OPPOSITE.empty()) {
         for (auto const& x : delayedRB) {
