@@ -1,26 +1,26 @@
 /*
-MIT License
+ MIT License
 
-Copyright (c) 2017 Valentine Nwachukwu <valdiz777@gmail.com>
+ Copyright (c) 2017 Valentine Nwachukwu <valdiz777@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 
 #include "DVCastLayer.h"
 
@@ -34,7 +34,9 @@ TRACI_SIGNAL_PARKING_CHANGE_NAME);
 void clean_queue(std::deque<int> * queue);
 int to_positive_angle(double angle);
 bool contains(std::deque<int> * queue, int key);
+bool contains(std::map<int, std::string> delayedRB, int key);
 
+// chose cluster ROI
 int clusterRadius = 250;
 
 Define_Module(DVCastLayer);
@@ -84,6 +86,8 @@ void DVCastLayer::handleLowerMsg(cMessage* msg) {
 void DVCastLayer::onData(WaveShortMessage* wsm) {
     EV << "****onData" << endl;
 
+    findHost()->getDisplayString().updateWith("r=16,green");
+
     // ignore messages that I sent out
     if (!sentMessages.empty() || contains(&sentMessages, wsm->getSerial())) {
         return;
@@ -92,37 +96,33 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
     if (rcvdMessages.empty() || !contains(&rcvdMessages, wsm->getSerial())) {
         // this is a new message, add to received message queue
         rcvdMessages.push_back(wsm->getSerial());
-        bool ODC = (NB_OPPOSITE.size() > 0) ? true : false;
-        bool Dflg =
-                (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
-                        true : false;
-        bool MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+        ODC = (!NB_OPPOSITE.empty()
+                && (NB_OPPOSITE.front() != wsm->getSenderAddress())) ?
+                true : false;
+        Dflg = (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
+                true : false;
+        MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
         EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
 
         if (!MDC) {
-            // no broadcast suppression
+            // no broadcast suppression yet
             if (ODC) {
                 sendMessage(wsm->getWsmData(), -1, wsm->getSerial());
-                sentMessages.push_back(wsm->getSerial());
                 if (!Dflg) {
-                    findHost()->getDisplayString().updateWith("r=16,blue");
-                    annotations->scheduleErase(1,
-                            annotations->drawLine(wsm->getSenderPos(),
-                                    mobility->getPositionAt(simTime()),
-                                    "blue"));
+                    findHost()->getDisplayString().updateWith("r=16,pink");
+                    if (!contains(delayedRB, wsm->getSerial())) {
+                        delayedRB.insert(
+                                std::pair<int, std::string>(wsm->getSerial(),
+                                        wsm->getWsmData()));
+                    }
                 }
             } else {
-                findHost()->getDisplayString().updateWith("r=16,pink");
-                annotations->scheduleErase(1,
-                        annotations->drawLine(wsm->getSenderPos(),
-                                mobility->getPositionAt(simTime()), "blue"));
+                findHost()->getDisplayString().updateWith("r=16,blue");
+                delayedRB.insert(
+                        std::pair<int, std::string>(wsm->getSerial(),
+                                wsm->getWsmData()));
             }
-        } else {
-            findHost()->getDisplayString().updateWith("r=16,green");
-            annotations->scheduleErase(1,
-                    annotations->drawLine(wsm->getSenderPos(),
-                            mobility->getPositionAt(simTime()), "blue"));
         }
     }
 }
@@ -133,9 +133,10 @@ void DVCastLayer::sendMessage(std::string blockedRoadId, int recipient,
 
     t_channel channel = dataOnSch ? type_SCH : type_CCH;
     WaveShortMessage* wsm = prepareWSM("data", dataLengthBits, channel,
-            dataPriority, recipient, 2);
+            dataPriority, recipient, serial);
     wsm->setWsmData(blockedRoadId.c_str());
     sendWSM(wsm);
+    sentMessages.push_back(wsm->getSerial());
 }
 
 void DVCastLayer::receiveSignal(cComponent* source, simsignal_t signalID,
@@ -189,7 +190,6 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
             if (!sentAccidentMessage) {
                 int serial = rand() % 101;
                 sendMessage(mobility->getRoadId(), -1, serial);
-                sentMessages.push_back(serial);
                 sentAccidentMessage = true;
             }
         }
@@ -217,9 +217,7 @@ void DVCastLayer::sendHello(DVCast* wsm) {
 // Received periodic hello from possible neighbors, update neighborhood table
 void DVCastLayer::onHello(DVCast* wsm) {
     findHost()->getDisplayString().updateWith("r=16,yellow");
-    annotations->scheduleErase(1,
-            annotations->drawLine(wsm->getSenderPos(),
-                    mobility->getPositionAt(simTime()), "blue"));
+
     EV << "****onHello" << endl;
     EV << "My Position x:" << mobility->getCurrentPosition().x
               << " My Position y:" << mobility->getCurrentPosition().y
@@ -323,6 +321,14 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
             i != NB_OPPOSITE.end(); ++i)
         EV << *i << ' ';
     EV << "]" << endl;
+
+    if (!delayedRB.empty() && !ODC && !NB_OPPOSITE.empty()) {
+        for (auto const& x : delayedRB) {
+            sendMessage(x.second, -1, x.first);
+        }
+        delayedRB.empty();
+        ODC = true;
+    }
 }
 
 DVCast* DVCastLayer::prepareHello(std::string name, int lengthBits,
@@ -393,4 +399,12 @@ void clean_queue(std::deque<int> * queue) {
 bool contains(std::deque<int> * queue, int key) {
     return (find(queue->begin(), queue->end(), key) != queue->end()) ?
             true : false;
+}
+
+bool contains(std::map<int, std::string> delayedRB, int key) {
+    for (auto const& x : delayedRB) {
+        if (x.first == key)
+            return true;
+    }
+    return false;
 }

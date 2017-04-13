@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 04/12/17 22:03:09 by SUMO duarouter Version 0.25.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="net.net.xml"/>
+        <trip-files value="uah5.trips.xml"/>
+    </input>
+
+    <output>
+        <output-file value="uahroutes5.rou.xml"/>
+    </output>
+
+    <processing>
+        <ignore-errors value="true"/>
+    </processing>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vehicle id="1" depart="1.00">
+        <route edges="-7822960#1 7822960#1 7825435#1 7825435#2 -7824722#2 -7824722#1 -7824722#0 7824718#0 7824718#1 7824718#2 7824402 -70930942 -70930943 -384343742#1 -384343742#0 -7824401#8 7825009#6 7825009#7 7825009#8 7825009#9 7825009#10 -46689710#1 7823124 384343740#0 384343740#1 384343740#2 384343740#3 384343740#4 -384343736 7804204"/>
+    </vehicle>
+    <vehicle id="2" depart="2.00">
+        <route edges="7814377 7825009#9 7825009#10 54974128#0 54974128#1 54974128#2 384343742#0 384343742#1 70930943 70930942 184049917#0 184049917#1 54149355 406366694#0 406366694#1 406366694#2 7824722#0 7822465#0 7822465#1 -7822669#2 -7822669#1"/>
+    </vehicle>
+    <vehicle id="3" depart="3.00">
+        <route edges="7822547#1 59580412#3 59580412#0 79874580#0 54974128#1 54974128#2 384343742#0 384343742#1 70930943 70930942 184049917#0 184049917#1 54149355 406366694#0 406366694#1 406366694#2 7824722#0 7824722#1 7824722#2 -7825435#2 -7825435#1 -7825435#0 7822960#1"/>
+    </vehicle>
+    <vehicle id="4" depart="4.00">
+        <route edges="-7824722#9 -7824722#8 -7824722#7 -7824722#6 -7824722#5 -7824722#4 -7824722#3 -7824722#2 -7824722#1 -7824722#0 7824718#0 7824718#1 7824718#2 7824402 -70930942 -70930943 -384343742#1 -384343742#0 -7824401#8 -7824401#7 -7824401#6 -7824401#5 -7824401#4 7798828#0 7798828#1 7798828#2 7798828#3 -7798828#3"/>
+    </vehicle>
+</routes>

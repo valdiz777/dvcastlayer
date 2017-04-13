@@ -56,10 +56,11 @@ protected:
     std::deque<int> NB_FRONT, NB_BACK, NB_OPPOSITE;
     std::deque<int> rcvdMessages;
     std::deque<int> sentMessages;
-    std::map<int, WaveShortMessage*> delayedRB;
+    std::map<int, std::string> delayedRB;
     bool sentAccidentMessage;
     bool isParking;
     bool sendWhileParking;
+    bool ODC, MDC, Dflg;
     static const simsignalwrap_t parkingStateChangedSignal;
 protected:
     virtual void onBeacon(WaveShortMessage* wsm);

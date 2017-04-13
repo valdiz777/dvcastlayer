@@ -21,7 +21,7 @@
 // }}
 
 /**
- * Class generated from <tt>messages/DVCast.msg:29</tt> by nedtool.
+ * Class generated from <tt>messages/DVCast.msg:38</tt> by nedtool.
  * <pre>
  * //
  * // TODO generated message class
