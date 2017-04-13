@@ -322,9 +322,13 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         EV << *i << ' ';
     EV << "]" << endl;
 
+    MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+
     if (!delayedRB.empty() && !ODC && !NB_OPPOSITE.empty()) {
         for (auto const& x : delayedRB) {
-            sendMessage(x.second, -1, x.first);
+            if (!MDC) { //verify MDC is still false
+                sendMessage(x.second, -1, x.first);
+            }
         }
         delayedRB.empty();
         ODC = true;
