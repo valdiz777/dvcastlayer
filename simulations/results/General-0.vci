@@ -1,0 +1,109 @@
+file 680304 1492063672                                          
+version 2
+run General-0-20170413-01:04:56-2292
+attr configname General
+attr datetime 20170413-01:04:56
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvars2 $repetition=0
+attr measurement ""
+attr network DVCastScenario
+attr processid 2292
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.coreDebug false
+param **.debug false
+param *.**.nic.mac1609_4.bitrate 18Mbps
+param *.**.nic.mac1609_4.txPower 20mW
+param *.**.nic.mac1609_4.useServiceChannel false
+param *.**.nic.phy80211p.analogueModels "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.decider "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.sensitivity -89dBm
+param *.**.nic.phy80211p.thermalNoise -110dBm
+param *.**.nic.phy80211p.usePropagationDelay true
+param *.**.nic.phy80211p.useThermalNoise true
+param *.annotations.draw false
+param *.connectionManager.alpha 2.0
+param *.connectionManager.carrierFrequency "5.890e9 Hz"
+param *.connectionManager.pMax 20mW
+param *.connectionManager.sat -89dBm
+param *.connectionManager.sendDirect true
+param *.manager.autoShutdown true
+param *.manager.host "\"localhost\""
+param *.manager.launchConfig "xmldoc(\"uah.launchd.xml\")"
+param *.manager.margin 25
+param *.manager.moduleDisplayString "\"\""
+param *.manager.moduleName "\"node\""
+param *.manager.moduleType "\"org.car2x.veins.nodes.Car\""
+param *.manager.port 9999
+param *.manager.updateInterval 0.1s
+param *.node[*0].veinsmobility.accidentCount 1
+param *.node[*0].veinsmobility.accidentDuration 30s
+param *.node[*0].veinsmobility.accidentStart 75s
+param *.node[*].appl.beaconInterval 1s
+param *.node[*].appl.beaconPriority 3
+param *.node[*].appl.dataOnSch false
+param *.node[*].appl.dataPriority 2
+param *.node[*].appl.debug false
+param *.node[*].appl.headerLength "256 bit"
+param *.node[*].appl.maxOffset 0.005s
+param *.node[*].appl.sendBeacons false
+param *.node[*].appl.sendData true
+param *.node[*].applType "\"DVCastLayer\""
+param *.node[*].mobilityType "\"TraCIMobility\""
+param *.node[*].mobilityType.debug true
+param *.node[*].veinsmobility.x 0
+param *.node[*].veinsmobility.y 0
+param *.node[*].veinsmobility.z 1.895
+param *.node[*].veinsmobilityType "\"org.car2x.veins.modules.mobility.traci.TraCIMobility\""
+param *.node[*].veinsmobilityType.debug true
+param *.playgroundSizeX 12500m
+param *.playgroundSizeY 12500m
+param *.playgroundSizeZ 2500m
+param *.world.use2D false
+param *.world.useTorus false
+
+vector 2  DVCastScenario.node[0].veinsmobility  posx  ETV
+vector 3  DVCastScenario.node[0].veinsmobility  posy  ETV
+vector 4  DVCastScenario.node[0].veinsmobility  speed  ETV
+vector 5  DVCastScenario.node[0].veinsmobility  acceleration  ETV
+vector 6  DVCastScenario.node[0].veinsmobility  co2emission  ETV
+vector 9  DVCastScenario.node[1].veinsmobility  posx  ETV
+vector 10  DVCastScenario.node[1].veinsmobility  posy  ETV
+vector 11  DVCastScenario.node[1].veinsmobility  speed  ETV
+vector 12  DVCastScenario.node[1].veinsmobility  acceleration  ETV
+vector 13  DVCastScenario.node[1].veinsmobility  co2emission  ETV
+vector 16  DVCastScenario.node[2].veinsmobility  posx  ETV
+vector 17  DVCastScenario.node[2].veinsmobility  posy  ETV
+vector 18  DVCastScenario.node[2].veinsmobility  speed  ETV
+vector 19  DVCastScenario.node[2].veinsmobility  acceleration  ETV
+vector 20  DVCastScenario.node[2].veinsmobility  co2emission  ETV
+vector 23  DVCastScenario.node[3].veinsmobility  posx  ETV
+vector 24  DVCastScenario.node[3].veinsmobility  posy  ETV
+vector 25  DVCastScenario.node[3].veinsmobility  speed  ETV
+vector 26  DVCastScenario.node[3].veinsmobility  acceleration  ETV
+vector 27  DVCastScenario.node[3].veinsmobility  co2emission  ETV
+2	3784 34352 12 2106 1.1 122.7 1217 6230.5842359913 6440.38 7775099.6115436 49676004987.571
+3	38136 34349 12 2106 1.1 122.7 1217 1225.86 1624.6377624438 1638589.7563017 2225945758.4814
+4	72485 30109 21 2106 1.2 122.7 1216 0 17.879882573057 10648.85891234 140644.36292399
+5	102594 30866 22 2106 1.3 122.7 1215 -4.5 2.6 175.80611826675 2236.5904659972
+6	133460 28546 22 2106 1.3 122.7 1215 0.973 12.164672764167 3162.92103268 14306.343176585
+9	162006 34055 30 2106 2.1 122.7 1207 5198.8474087069 5871.6919852932 6525718.1487964 35338043839.14
+10	196061 35285 30 2106 2.1 122.7 1207 1218.0282355834 2066.6139040433 1992741.6478101 3398395440.4471
+11	231346 35373 39 2106 2.2 122.7 1206 0.002115081748301 27.779792706172 16126.887641682 327617.91689944
+12	266719 36069 40 2106 2.3 122.7 1205 -4.5 2.6 9.1272065101847 4125.24625635
+13	302788 31289 40 2106 2.3 122.7 1205 -0.66129425195814 20.926508835823 5093.5644713971 44611.751519528
+16	334077 35027 48 2106 3.1 122.7 1197 5323.990711652 5872.7032969859 6649766.1857114 36988883528.265
+17	369104 35030 48 2106 3.1 122.7 1197 1218.0263774472 1643.0103151037 1643096.3610385 2282490188.7326
+18	404134 35615 57 2106 3.2 122.7 1196 2.9768131044862e-008 27.777887137013 13650.089999732 224305.87689956
+19	439749 36338 58 2106 3.3 122.7 1195 -4.5 2.6 -2.5973713104329 4127.0331052011
+20	476087 31134 58 2106 3.3 122.7 1195 0.080582267679278 19.356935302223 4548.9600098969 35575.186621482
+23	507221 34744 66 2106 4.1 122.7 1187 5438.0586795445 7645.856968441 7892199.8830056 52959513485.061
+24	541965 34683 66 2106 4.1 122.7 1187 1205.1231790585 1377.2997403068 1458269.585593 1792292621.7658
+25	576648 34724 75 2106 4.2 122.7 1186 0.25656077705161 27.779975727196 22695.469848625 463951.16929682
+26	611372 36361 76 2106 4.3 122.7 1185 -1.2685035493458 2.5928149756317 274.08170404343 861.93886130097
+27	647733 32571 76 2106 4.3 122.7 1185 -0.73879426617671 20.795217832801 4613.5738044153 30966.104923269

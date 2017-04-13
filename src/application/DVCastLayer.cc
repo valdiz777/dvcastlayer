@@ -216,7 +216,8 @@ void DVCastLayer::sendHello(DVCast* wsm) {
 
 // Received periodic hello from possible neighbors, update neighborhood table
 void DVCastLayer::onHello(DVCast* wsm) {
-    findHost()->getDisplayString().updateWith("r=16,yellow");
+    if (MDC)
+        findHost()->getDisplayString().updateWith("r=16,yellow");
 
     EV << "****onHello" << endl;
     EV << "My Position x:" << mobility->getCurrentPosition().x
