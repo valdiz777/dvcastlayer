@@ -31,10 +31,12 @@ const simsignalwrap_t DVCastLayer::parkingStateChangedSignal = simsignalwrap_t(
 TRACI_SIGNAL_PARKING_CHANGE_NAME);
 
 // Utility functions
-void clean_queue(std::deque<int> * queue);
+void add_to_queue(std::deque<int> * TargetQueue, std::deque<int> * OtherQueue1,
+        std::deque<int> * OtherQueue2, int key);
 int to_positive_angle(double angle);
 bool contains(std::deque<int> * queue, int key);
 bool contains(std::map<int, std::string> delayedRB, int key);
+void remove(std::deque<int> * queue, int key);
 
 // chose cluster ROI
 int clusterRadius = 250;
@@ -87,21 +89,27 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
     EV << "****onData" << endl;
 
     findHost()->getDisplayString().updateWith("r=16,green");
-
     // ignore messages that I sent out
-    if (!sentMessages.empty() || contains(&sentMessages, wsm->getSerial())) {
+    if (contains(&sentMessages, wsm->getSerial())) {
         return;
     }
 
-    if (rcvdMessages.empty() || !contains(&rcvdMessages, wsm->getSerial())) {
+    if (!contains(&rcvdMessages, wsm->getSerial())) {
         // this is a new message, add to received message queue
         rcvdMessages.push_back(wsm->getSerial());
-        ODC = (!NB_OPPOSITE.empty()
-                && (NB_OPPOSITE.front() != wsm->getSenderAddress())) ?
-                true : false;
+        if (!NB_OPPOSITE.empty()) {
+            if (NB_OPPOSITE.size() == 1
+                    && (NB_OPPOSITE.front() == wsm->getSenderAddress())) {
+                ODC = false;
+            }
+            ODC = true;
+        } else {
+            ODC = false;
+        }
+
         Dflg = (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
                 true : false;
-        MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+        MDC = (!NB_FRONT.empty() && !NB_BACK.empty()) ? true : false;
 
         EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
 
@@ -109,6 +117,7 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
             // no broadcast suppression yet
             if (ODC) {
                 sendMessage(wsm->getWsmData(), -1, wsm->getSerial());
+                sentMessages.push_back(wsm->getSerial());
                 if (!Dflg) {
                     findHost()->getDisplayString().updateWith("r=16,pink");
                     if (!contains(delayedRB, wsm->getSerial())) {
@@ -190,6 +199,7 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
             if (!sentAccidentMessage) {
                 int serial = rand() % 101;
                 sendMessage(mobility->getRoadId(), -1, serial);
+                sentMessages.push_back(serial);
                 sentAccidentMessage = true;
             }
         }
@@ -216,8 +226,11 @@ void DVCastLayer::sendHello(DVCast* wsm) {
 
 // Received periodic hello from possible neighbors, update neighborhood table
 void DVCastLayer::onHello(DVCast* wsm) {
-    if (MDC)
+    if (MDC) {
         findHost()->getDisplayString().updateWith("r=16,yellow");
+    } else if (ODC) {
+        findHost()->getDisplayString().updateWith("r=16,purple");
+    }
 
     EV << "****onHello" << endl;
     EV << "My Position x:" << mobility->getCurrentPosition().x
@@ -246,70 +259,60 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
               << getParentModule()->getIndex() << " SenderId:" << senderId
               << endl;
 
-    int angleDiff = std::abs(
-            senderAngle - to_positive_angle(mobility->getAngleRad()));
+    int myAngle = to_positive_angle(mobility->getAngleRad());
+    int angleDiff = std::abs(senderAngle - myAngle);
     if (angleDiff > 180)
         angleDiff = 360 - angleDiff;
-
+    EV << "My angle is:" << myAngle << " Neighbor's Angle is:" << senderAngle
+              << endl;
     if (angleDiff <= 45) {
         // same direction, calculate front and back
         if ((senderAngle >= 0 && senderAngle < 45)
                 || (senderAngle >= 315 && senderAngle < 360)) {
             //east
             if (senderPosition.x > mobility->getCurrentPosition().x) {
-                NB_FRONT.push_back(senderId);
+                add_to_queue(&NB_FRONT, &NB_BACK, &NB_OPPOSITE, senderId);
             } else {
-                NB_BACK.push_back(senderId);
+                add_to_queue(&NB_BACK, &NB_FRONT, &NB_OPPOSITE, senderId);
             }
-
-            clean_queue(&NB_FRONT);
-            clean_queue(&NB_BACK);
-
         } else if ((senderAngle >= 45 && senderAngle < 90)
                 || (senderAngle >= 90 && senderAngle < 135)) {
             //north
             if (senderPosition.y > mobility->getCurrentPosition().y) {
-                NB_FRONT.push_back(senderId);
+                add_to_queue(&NB_FRONT, &NB_BACK, &NB_OPPOSITE, senderId);
             } else {
-                NB_BACK.push_back(senderId);
+                add_to_queue(&NB_BACK, &NB_FRONT, &NB_OPPOSITE, senderId);
             }
-
-            clean_queue(&NB_FRONT);
-            clean_queue(&NB_BACK);
-
         } else if ((senderAngle >= 135 && senderAngle < 180)
                 || (senderAngle >= 180 && senderAngle < 225)) {
             // west
             if (senderPosition.x < mobility->getCurrentPosition().x) {
-                NB_FRONT.push_back(senderId);
+                add_to_queue(&NB_FRONT, &NB_BACK, &NB_OPPOSITE, senderId);
             } else {
-                NB_BACK.push_back(senderId);
+                add_to_queue(&NB_BACK, &NB_FRONT, &NB_OPPOSITE, senderId);
             }
-
-            clean_queue(&NB_FRONT);
-            clean_queue(&NB_BACK);
-
         } else if ((senderAngle >= 225 && senderAngle < 270)
                 || (senderAngle >= 270 && senderAngle < 315)) {
             // south
             if (senderPosition.y < mobility->getCurrentPosition().y) {
-                NB_FRONT.push_back(senderId);
+                add_to_queue(&NB_FRONT, &NB_BACK, &NB_OPPOSITE, senderId);
             } else {
-                NB_BACK.push_back(senderId);
+                add_to_queue(&NB_BACK, &NB_FRONT, &NB_OPPOSITE, senderId);
             }
-
-            clean_queue(&NB_FRONT);
-            clean_queue(&NB_BACK);
-
         }
 
     } else if (angleDiff > 90 && angleDiff <= 180) {
         // opposite direction
         NB_OPPOSITE.push_back(senderId);
-        clean_queue(&NB_OPPOSITE);
+        add_to_queue(&NB_OPPOSITE, &NB_FRONT, &NB_BACK, senderId);
     }
 
-    MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+    MDC = (!NB_FRONT.empty() && !NB_BACK.empty()) ? true : false;
+    if (!NB_OPPOSITE.empty()){
+        ODC = true;
+    } else {
+        ODC = false;
+    }
 
     EV << "NB_FRONT [ ";
     for (std::deque<int>::const_iterator i = NB_FRONT.begin();
@@ -394,11 +397,26 @@ int to_positive_angle(double angle) {
     return (int) angle;
 }
 
-void clean_queue(std::deque<int> * queue) {
-// For ensuring MAXnb = 5
-    if (queue->size() == 5) {
-        queue->pop_front();
+void add_to_queue(std::deque<int> * TargetQueue, std::deque<int> * OtherQueue1,
+        std::deque<int> * OtherQueue2, int key) {
+
+    // Remove redundant nodes
+    remove(TargetQueue, key);
+    remove(OtherQueue1, key);
+    remove(OtherQueue2, key);
+
+    // Add our new neighbor
+    TargetQueue->push_back(key);
+
+    // For ensure MAXnb = 5
+    while (TargetQueue->size() > 5) {
+        TargetQueue->pop_front();
     }
+
+}
+
+void remove(std::deque<int> * queue, int key) {
+    queue->erase(remove(queue->begin(), queue->end(), key), queue->end());
 }
 
 bool contains(std::deque<int> * queue, int key) {

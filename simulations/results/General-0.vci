@@ -1,15 +1,15 @@
-file 680304 1492063672                                          
+                                                                
 version 2
-run General-0-20170413-01:04:56-2292
+run General-0-20170415-20:28:16-3312
 attr configname General
-attr datetime 20170413-01:04:56
+attr datetime 20170415-20:28:16
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvars2 $repetition=0
 attr measurement ""
 attr network DVCastScenario
-attr processid 2292
+attr processid 3312
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -87,23 +87,83 @@ vector 24  DVCastScenario.node[3].veinsmobility  posy  ETV
 vector 25  DVCastScenario.node[3].veinsmobility  speed  ETV
 vector 26  DVCastScenario.node[3].veinsmobility  acceleration  ETV
 vector 27  DVCastScenario.node[3].veinsmobility  co2emission  ETV
-2	3784 34352 12 2106 1.1 122.7 1217 6230.5842359913 6440.38 7775099.6115436 49676004987.571
-3	38136 34349 12 2106 1.1 122.7 1217 1225.86 1624.6377624438 1638589.7563017 2225945758.4814
-4	72485 30109 21 2106 1.2 122.7 1216 0 17.879882573057 10648.85891234 140644.36292399
-5	102594 30866 22 2106 1.3 122.7 1215 -4.5 2.6 175.80611826675 2236.5904659972
-6	133460 28546 22 2106 1.3 122.7 1215 0.973 12.164672764167 3162.92103268 14306.343176585
-9	162006 34055 30 2106 2.1 122.7 1207 5198.8474087069 5871.6919852932 6525718.1487964 35338043839.14
-10	196061 35285 30 2106 2.1 122.7 1207 1218.0282355834 2066.6139040433 1992741.6478101 3398395440.4471
-11	231346 35373 39 2106 2.2 122.7 1206 0.002115081748301 27.779792706172 16126.887641682 327617.91689944
-12	266719 36069 40 2106 2.3 122.7 1205 -4.5 2.6 9.1272065101847 4125.24625635
-13	302788 31289 40 2106 2.3 122.7 1205 -0.66129425195814 20.926508835823 5093.5644713971 44611.751519528
-16	334077 35027 48 2106 3.1 122.7 1197 5323.990711652 5872.7032969859 6649766.1857114 36988883528.265
-17	369104 35030 48 2106 3.1 122.7 1197 1218.0263774472 1643.0103151037 1643096.3610385 2282490188.7326
-18	404134 35615 57 2106 3.2 122.7 1196 2.9768131044862e-008 27.777887137013 13650.089999732 224305.87689956
-19	439749 36338 58 2106 3.3 122.7 1195 -4.5 2.6 -2.5973713104329 4127.0331052011
-20	476087 31134 58 2106 3.3 122.7 1195 0.080582267679278 19.356935302223 4548.9600098969 35575.186621482
-23	507221 34744 66 2106 4.1 122.7 1187 5438.0586795445 7645.856968441 7892199.8830056 52959513485.061
-24	541965 34683 66 2106 4.1 122.7 1187 1205.1231790585 1377.2997403068 1458269.585593 1792292621.7658
-25	576648 34724 75 2106 4.2 122.7 1186 0.25656077705161 27.779975727196 22695.469848625 463951.16929682
-26	611372 36361 76 2106 4.3 122.7 1185 -1.2685035493458 2.5928149756317 274.08170404343 861.93886130097
-27	647733 32571 76 2106 4.3 122.7 1185 -0.73879426617671 20.795217832801 4613.5738044153 30966.104923269
+vector 30  DVCastScenario.node[4].veinsmobility  posx  ETV
+vector 31  DVCastScenario.node[4].veinsmobility  posy  ETV
+vector 32  DVCastScenario.node[4].veinsmobility  speed  ETV
+vector 33  DVCastScenario.node[4].veinsmobility  acceleration  ETV
+vector 34  DVCastScenario.node[4].veinsmobility  co2emission  ETV
+vector 37  DVCastScenario.node[5].veinsmobility  posx  ETV
+vector 38  DVCastScenario.node[5].veinsmobility  posy  ETV
+vector 39  DVCastScenario.node[5].veinsmobility  speed  ETV
+vector 40  DVCastScenario.node[5].veinsmobility  acceleration  ETV
+vector 41  DVCastScenario.node[5].veinsmobility  co2emission  ETV
+vector 44  DVCastScenario.node[6].veinsmobility  posx  ETV
+vector 45  DVCastScenario.node[6].veinsmobility  posy  ETV
+vector 46  DVCastScenario.node[6].veinsmobility  speed  ETV
+vector 47  DVCastScenario.node[6].veinsmobility  acceleration  ETV
+vector 48  DVCastScenario.node[6].veinsmobility  co2emission  ETV
+vector 51  DVCastScenario.node[7].veinsmobility  posx  ETV
+vector 52  DVCastScenario.node[7].veinsmobility  posy  ETV
+vector 53  DVCastScenario.node[7].veinsmobility  speed  ETV
+vector 54  DVCastScenario.node[7].veinsmobility  acceleration  ETV
+vector 55  DVCastScenario.node[7].veinsmobility  co2emission  ETV
+vector 58  DVCastScenario.node[8].veinsmobility  posx  ETV
+vector 59  DVCastScenario.node[8].veinsmobility  posy  ETV
+vector 60  DVCastScenario.node[8].veinsmobility  speed  ETV
+vector 61  DVCastScenario.node[8].veinsmobility  acceleration  ETV
+vector 62  DVCastScenario.node[8].veinsmobility  co2emission  ETV
+vector 65  DVCastScenario.node[9].veinsmobility  posx  ETV
+vector 66  DVCastScenario.node[9].veinsmobility  posy  ETV
+vector 67  DVCastScenario.node[9].veinsmobility  speed  ETV
+vector 68  DVCastScenario.node[9].veinsmobility  acceleration  ETV
+vector 69  DVCastScenario.node[9].veinsmobility  co2emission  ETV
+vector 72  DVCastScenario.node[10].veinsmobility  posx  ETV
+vector 73  DVCastScenario.node[10].veinsmobility  posy  ETV
+vector 74  DVCastScenario.node[10].veinsmobility  speed  ETV
+vector 75  DVCastScenario.node[10].veinsmobility  acceleration  ETV
+vector 76  DVCastScenario.node[10].veinsmobility  co2emission  ETV
+vector 79  DVCastScenario.node[11].veinsmobility  posx  ETV
+vector 80  DVCastScenario.node[11].veinsmobility  posy  ETV
+vector 81  DVCastScenario.node[11].veinsmobility  speed  ETV
+vector 82  DVCastScenario.node[11].veinsmobility  acceleration  ETV
+vector 83  DVCastScenario.node[11].veinsmobility  co2emission  ETV
+vector 86  DVCastScenario.node[12].veinsmobility  posx  ETV
+vector 87  DVCastScenario.node[12].veinsmobility  posy  ETV
+vector 88  DVCastScenario.node[12].veinsmobility  speed  ETV
+vector 89  DVCastScenario.node[12].veinsmobility  acceleration  ETV
+vector 90  DVCastScenario.node[12].veinsmobility  co2emission  ETV
+vector 93  DVCastScenario.node[13].veinsmobility  posx  ETV
+vector 94  DVCastScenario.node[13].veinsmobility  posy  ETV
+vector 95  DVCastScenario.node[13].veinsmobility  speed  ETV
+vector 96  DVCastScenario.node[13].veinsmobility  acceleration  ETV
+vector 97  DVCastScenario.node[13].veinsmobility  co2emission  ETV
+vector 100  DVCastScenario.node[14].veinsmobility  posx  ETV
+vector 101  DVCastScenario.node[14].veinsmobility  posy  ETV
+vector 102  DVCastScenario.node[14].veinsmobility  speed  ETV
+vector 103  DVCastScenario.node[14].veinsmobility  acceleration  ETV
+vector 104  DVCastScenario.node[14].veinsmobility  co2emission  ETV
+vector 107  DVCastScenario.node[15].veinsmobility  posx  ETV
+vector 108  DVCastScenario.node[15].veinsmobility  posy  ETV
+vector 109  DVCastScenario.node[15].veinsmobility  speed  ETV
+vector 110  DVCastScenario.node[15].veinsmobility  acceleration  ETV
+vector 111  DVCastScenario.node[15].veinsmobility  co2emission  ETV
+vector 114  DVCastScenario.node[16].veinsmobility  posx  ETV
+vector 115  DVCastScenario.node[16].veinsmobility  posy  ETV
+vector 116  DVCastScenario.node[16].veinsmobility  speed  ETV
+vector 117  DVCastScenario.node[16].veinsmobility  acceleration  ETV
+vector 118  DVCastScenario.node[16].veinsmobility  co2emission  ETV
+55	7942 7982 166 1366 8.3 38.7 305 0.973 10.52566729662 1043.4721549989 5283.4409551445
+54	15924 8858 166 1366 8.3 38.7 305 -4.4838806276743 2.6 135.65127349926 1121.307673699
+53	24782 8861 165 1366 8.2 38.7 306 0.25389976076828 13.889283642636 2985.9504138741 34144.407166657
+52	33643 8873 150 1366 8.1 38.7 307 1631.0678496397 1756.3437279736 520964.65874644 884497905.67581
+51	42516 8886 150 1366 8.1 38.7 307 6343.640173711 6439.3757773013 1959112.2883689 12502550697.752
+13	51402 23087 40 5836 2.3 91.3 891 0.973 10.200332271775 1833.0199678048 6020.3331831052
+12	74489 27176 40 5836 2.3 91.3 891 -4.5 2.6 53.06958511194 1771.0848589751
+11	101665 26619 39 5836 2.2 91.3 892 9.423602950799e-008 13.889729095947 5315.3171596015 48600.339291026
+10	128284 26048 30 5836 2.1 91.3 893 1223.0901999098 1502.3838583507 1175353.9794292 1556689822.8782
+9	154332 25234 30 5836 2.1 91.3 893 5791.4173138149 5955.2084827037 5231843.1392053 30653455481.424
+90	179566 26234 338 7828 15.3 111.4 962 0.80966849578008 13.550808537796 3206.5417723267 16442.350324747
+89	205800 29706 338 7828 15.3 111.4 962 -4.4595715541648 2.6 176.05956237189 1380.0226036451
+88	235506 28552 337 7828 15.2 111.4 963 0.25596504926798 17.879763465817 15363.165990228 261511.00637823
+87	264058 28562 328 7828 15.1 111.4 964 1205.1231790585 1229.9293533651 1181227.3654068 1447432350.5446
+86	292620 28588 328 7828 15.1 111.4 964 6273.437507423 7645.856968441 6646302.9099823 46020026828.654
