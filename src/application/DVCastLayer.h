@@ -60,7 +60,7 @@ protected:
     bool sentAccidentMessage;
     bool isParking;
     bool sendWhileParking;
-    bool ODC =false;
+    bool ODC =true;
     bool MDC = false;
     bool Dflg = false;
     static const simsignalwrap_t parkingStateChangedSignal;

@@ -265,7 +265,7 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         angleDiff = 360 - angleDiff;
     EV << "My angle is:" << myAngle << " Neighbor's Angle is:" << senderAngle
               << endl;
-    if (angleDiff <= 30) {
+    if (angleDiff <= 45) {
         // same direction, calculate front and back
         if ((senderAngle >= 0 && senderAngle < 45)
                 || (senderAngle >= 315 && senderAngle < 360)) {
@@ -329,7 +329,7 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         EV << *i << ' ';
     EV << "]" << endl;
 
-    if (!delayedRB.empty() && !ODC && !NB_OPPOSITE.empty()) {
+    if (!delayedRB.empty() && !ODC) {
         for (auto const& x : delayedRB) {
             if (!MDC) { //verify MDC is still false
                 sendMessage(x.second, -1, x.first);
