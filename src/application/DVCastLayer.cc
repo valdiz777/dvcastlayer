@@ -109,7 +109,7 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
 
         Dflg = (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
                 true : false;
-        MDC = (!NB_FRONT.empty() || !NB_BACK.empty()) ? true : false;
+        MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
         EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
 
@@ -265,7 +265,7 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         angleDiff = 360 - angleDiff;
     EV << "My angle is:" << myAngle << " Neighbor's Angle is:" << senderAngle
               << endl;
-    if (angleDiff <= 45) {
+    if (angleDiff <= 30) {
         // same direction, calculate front and back
         if ((senderAngle >= 0 && senderAngle < 45)
                 || (senderAngle >= 315 && senderAngle < 360)) {
@@ -307,7 +307,7 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         add_to_queue(&NB_OPPOSITE, &NB_FRONT, &NB_BACK, senderId);
     }
 
-    MDC = (!NB_FRONT.empty() || !NB_BACK.empty()) ? true : false;
+    MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
     if (!NB_OPPOSITE.empty()){
         ODC = true;
