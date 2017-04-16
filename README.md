@@ -1,5 +1,5 @@
 # dvcastlayer
-Simulation of DV-Cast VANET in omnet++ using SUMO and TRACI.
+Simulation of an advanced DV-Cast VANET in omnet++ using SUMO and TRACI. The advancement is in the primarily in using dynamic programming for broadcast supression as well as the use of trignometric calculus for neighborhood table construction.
 
 ## Dependencies
 [Sumo 0.25](https://sourceforge.net/projects/sumo/?source=directory)
