@@ -109,7 +109,7 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
 
         Dflg = (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
                 true : false;
-        MDC = (!NB_FRONT.empty() && !NB_BACK.empty()) ? true : false;
+        MDC = (!NB_FRONT.empty() || !NB_BACK.empty()) ? true : false;
 
         EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
 
@@ -307,7 +307,8 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
         add_to_queue(&NB_OPPOSITE, &NB_FRONT, &NB_BACK, senderId);
     }
 
-    MDC = (!NB_FRONT.empty() && !NB_BACK.empty()) ? true : false;
+    MDC = (!NB_FRONT.empty() || !NB_BACK.empty()) ? true : false;
+
     if (!NB_OPPOSITE.empty()){
         ODC = true;
     } else {

@@ -1,15 +1,15 @@
                                                                 
 version 2
-run General-0-20170415-20:28:16-3312
+run General-0-20170416-02:06:35-14392
 attr configname General
-attr datetime 20170415-20:28:16
+attr datetime 20170416-02:06:35
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvars2 $repetition=0
 attr measurement ""
 attr network DVCastScenario
-attr processid 3312
+attr processid 14392
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -61,9 +61,9 @@ param *.node[*].veinsmobility.y 0
 param *.node[*].veinsmobility.z 1.895
 param *.node[*].veinsmobilityType "\"org.car2x.veins.modules.mobility.traci.TraCIMobility\""
 param *.node[*].veinsmobilityType.debug true
-param *.playgroundSizeX 12500m
-param *.playgroundSizeY 12500m
-param *.playgroundSizeZ 2500m
+param *.playgroundSizeX 20000m
+param *.playgroundSizeY 20000m
+param *.playgroundSizeZ 5000m
 param *.world.use2D false
 param *.world.useTorus false
 
@@ -152,18 +152,353 @@ vector 115  DVCastScenario.node[16].veinsmobility  posy  ETV
 vector 116  DVCastScenario.node[16].veinsmobility  speed  ETV
 vector 117  DVCastScenario.node[16].veinsmobility  acceleration  ETV
 vector 118  DVCastScenario.node[16].veinsmobility  co2emission  ETV
-55	7942 7982 166 1366 8.3 38.7 305 0.973 10.52566729662 1043.4721549989 5283.4409551445
-54	15924 8858 166 1366 8.3 38.7 305 -4.4838806276743 2.6 135.65127349926 1121.307673699
-53	24782 8861 165 1366 8.2 38.7 306 0.25389976076828 13.889283642636 2985.9504138741 34144.407166657
-52	33643 8873 150 1366 8.1 38.7 307 1631.0678496397 1756.3437279736 520964.65874644 884497905.67581
-51	42516 8886 150 1366 8.1 38.7 307 6343.640173711 6439.3757773013 1959112.2883689 12502550697.752
-13	51402 23087 40 5836 2.3 91.3 891 0.973 10.200332271775 1833.0199678048 6020.3331831052
-12	74489 27176 40 5836 2.3 91.3 891 -4.5 2.6 53.06958511194 1771.0848589751
-11	101665 26619 39 5836 2.2 91.3 892 9.423602950799e-008 13.889729095947 5315.3171596015 48600.339291026
-10	128284 26048 30 5836 2.1 91.3 893 1223.0901999098 1502.3838583507 1175353.9794292 1556689822.8782
-9	154332 25234 30 5836 2.1 91.3 893 5791.4173138149 5955.2084827037 5231843.1392053 30653455481.424
-90	179566 26234 338 7828 15.3 111.4 962 0.80966849578008 13.550808537796 3206.5417723267 16442.350324747
-89	205800 29706 338 7828 15.3 111.4 962 -4.4595715541648 2.6 176.05956237189 1380.0226036451
-88	235506 28552 337 7828 15.2 111.4 963 0.25596504926798 17.879763465817 15363.165990228 261511.00637823
-87	264058 28562 328 7828 15.1 111.4 964 1205.1231790585 1229.9293533651 1181227.3654068 1447432350.5446
-86	292620 28588 328 7828 15.1 111.4 964 6273.437507423 7645.856968441 6646302.9099823 46020026828.654
+vector 121  DVCastScenario.node[17].veinsmobility  posx  ETV
+vector 122  DVCastScenario.node[17].veinsmobility  posy  ETV
+vector 123  DVCastScenario.node[17].veinsmobility  speed  ETV
+vector 124  DVCastScenario.node[17].veinsmobility  acceleration  ETV
+vector 125  DVCastScenario.node[17].veinsmobility  co2emission  ETV
+vector 128  DVCastScenario.node[18].veinsmobility  posx  ETV
+vector 129  DVCastScenario.node[18].veinsmobility  posy  ETV
+vector 130  DVCastScenario.node[18].veinsmobility  speed  ETV
+vector 131  DVCastScenario.node[18].veinsmobility  acceleration  ETV
+vector 132  DVCastScenario.node[18].veinsmobility  co2emission  ETV
+vector 135  DVCastScenario.node[19].veinsmobility  posx  ETV
+vector 136  DVCastScenario.node[19].veinsmobility  posy  ETV
+vector 137  DVCastScenario.node[19].veinsmobility  speed  ETV
+vector 138  DVCastScenario.node[19].veinsmobility  acceleration  ETV
+vector 139  DVCastScenario.node[19].veinsmobility  co2emission  ETV
+vector 142  DVCastScenario.node[20].veinsmobility  posx  ETV
+vector 143  DVCastScenario.node[20].veinsmobility  posy  ETV
+vector 144  DVCastScenario.node[20].veinsmobility  speed  ETV
+vector 145  DVCastScenario.node[20].veinsmobility  acceleration  ETV
+vector 146  DVCastScenario.node[20].veinsmobility  co2emission  ETV
+vector 149  DVCastScenario.node[21].veinsmobility  posx  ETV
+vector 150  DVCastScenario.node[21].veinsmobility  posy  ETV
+vector 151  DVCastScenario.node[21].veinsmobility  speed  ETV
+vector 152  DVCastScenario.node[21].veinsmobility  acceleration  ETV
+vector 153  DVCastScenario.node[21].veinsmobility  co2emission  ETV
+vector 156  DVCastScenario.node[22].veinsmobility  posx  ETV
+vector 157  DVCastScenario.node[22].veinsmobility  posy  ETV
+vector 158  DVCastScenario.node[22].veinsmobility  speed  ETV
+vector 159  DVCastScenario.node[22].veinsmobility  acceleration  ETV
+vector 160  DVCastScenario.node[22].veinsmobility  co2emission  ETV
+vector 163  DVCastScenario.node[23].veinsmobility  posx  ETV
+vector 164  DVCastScenario.node[23].veinsmobility  posy  ETV
+vector 165  DVCastScenario.node[23].veinsmobility  speed  ETV
+vector 166  DVCastScenario.node[23].veinsmobility  acceleration  ETV
+vector 167  DVCastScenario.node[23].veinsmobility  co2emission  ETV
+vector 170  DVCastScenario.node[24].veinsmobility  posx  ETV
+vector 171  DVCastScenario.node[24].veinsmobility  posy  ETV
+vector 172  DVCastScenario.node[24].veinsmobility  speed  ETV
+vector 173  DVCastScenario.node[24].veinsmobility  acceleration  ETV
+vector 174  DVCastScenario.node[24].veinsmobility  co2emission  ETV
+vector 177  DVCastScenario.node[25].veinsmobility  posx  ETV
+vector 178  DVCastScenario.node[25].veinsmobility  posy  ETV
+vector 179  DVCastScenario.node[25].veinsmobility  speed  ETV
+vector 180  DVCastScenario.node[25].veinsmobility  acceleration  ETV
+vector 181  DVCastScenario.node[25].veinsmobility  co2emission  ETV
+vector 184  DVCastScenario.node[26].veinsmobility  posx  ETV
+vector 185  DVCastScenario.node[26].veinsmobility  posy  ETV
+vector 186  DVCastScenario.node[26].veinsmobility  speed  ETV
+vector 187  DVCastScenario.node[26].veinsmobility  acceleration  ETV
+vector 188  DVCastScenario.node[26].veinsmobility  co2emission  ETV
+vector 191  DVCastScenario.node[27].veinsmobility  posx  ETV
+vector 192  DVCastScenario.node[27].veinsmobility  posy  ETV
+vector 193  DVCastScenario.node[27].veinsmobility  speed  ETV
+vector 194  DVCastScenario.node[27].veinsmobility  acceleration  ETV
+vector 195  DVCastScenario.node[27].veinsmobility  co2emission  ETV
+vector 198  DVCastScenario.node[28].veinsmobility  posx  ETV
+vector 199  DVCastScenario.node[28].veinsmobility  posy  ETV
+vector 200  DVCastScenario.node[28].veinsmobility  speed  ETV
+vector 201  DVCastScenario.node[28].veinsmobility  acceleration  ETV
+vector 202  DVCastScenario.node[28].veinsmobility  co2emission  ETV
+vector 205  DVCastScenario.node[29].veinsmobility  posx  ETV
+vector 206  DVCastScenario.node[29].veinsmobility  posy  ETV
+vector 207  DVCastScenario.node[29].veinsmobility  speed  ETV
+vector 208  DVCastScenario.node[29].veinsmobility  acceleration  ETV
+vector 209  DVCastScenario.node[29].veinsmobility  co2emission  ETV
+vector 212  DVCastScenario.node[30].veinsmobility  posx  ETV
+vector 213  DVCastScenario.node[30].veinsmobility  posy  ETV
+vector 214  DVCastScenario.node[30].veinsmobility  speed  ETV
+vector 215  DVCastScenario.node[30].veinsmobility  acceleration  ETV
+vector 216  DVCastScenario.node[30].veinsmobility  co2emission  ETV
+vector 219  DVCastScenario.node[31].veinsmobility  posx  ETV
+vector 220  DVCastScenario.node[31].veinsmobility  posy  ETV
+vector 221  DVCastScenario.node[31].veinsmobility  speed  ETV
+vector 222  DVCastScenario.node[31].veinsmobility  acceleration  ETV
+vector 223  DVCastScenario.node[31].veinsmobility  co2emission  ETV
+vector 226  DVCastScenario.node[32].veinsmobility  posx  ETV
+vector 227  DVCastScenario.node[32].veinsmobility  posy  ETV
+vector 228  DVCastScenario.node[32].veinsmobility  speed  ETV
+vector 229  DVCastScenario.node[32].veinsmobility  acceleration  ETV
+vector 230  DVCastScenario.node[32].veinsmobility  co2emission  ETV
+vector 233  DVCastScenario.node[33].veinsmobility  posx  ETV
+vector 234  DVCastScenario.node[33].veinsmobility  posy  ETV
+vector 235  DVCastScenario.node[33].veinsmobility  speed  ETV
+vector 236  DVCastScenario.node[33].veinsmobility  acceleration  ETV
+vector 237  DVCastScenario.node[33].veinsmobility  co2emission  ETV
+vector 240  DVCastScenario.node[34].veinsmobility  posx  ETV
+vector 241  DVCastScenario.node[34].veinsmobility  posy  ETV
+vector 242  DVCastScenario.node[34].veinsmobility  speed  ETV
+vector 243  DVCastScenario.node[34].veinsmobility  acceleration  ETV
+vector 244  DVCastScenario.node[34].veinsmobility  co2emission  ETV
+vector 247  DVCastScenario.node[35].veinsmobility  posx  ETV
+vector 248  DVCastScenario.node[35].veinsmobility  posy  ETV
+vector 249  DVCastScenario.node[35].veinsmobility  speed  ETV
+vector 250  DVCastScenario.node[35].veinsmobility  acceleration  ETV
+vector 251  DVCastScenario.node[35].veinsmobility  co2emission  ETV
+vector 254  DVCastScenario.node[36].veinsmobility  posx  ETV
+vector 255  DVCastScenario.node[36].veinsmobility  posy  ETV
+vector 256  DVCastScenario.node[36].veinsmobility  speed  ETV
+vector 257  DVCastScenario.node[36].veinsmobility  acceleration  ETV
+vector 258  DVCastScenario.node[36].veinsmobility  co2emission  ETV
+vector 261  DVCastScenario.node[37].veinsmobility  posx  ETV
+vector 262  DVCastScenario.node[37].veinsmobility  posy  ETV
+vector 263  DVCastScenario.node[37].veinsmobility  speed  ETV
+vector 264  DVCastScenario.node[37].veinsmobility  acceleration  ETV
+vector 265  DVCastScenario.node[37].veinsmobility  co2emission  ETV
+vector 268  DVCastScenario.node[38].veinsmobility  posx  ETV
+vector 269  DVCastScenario.node[38].veinsmobility  posy  ETV
+vector 270  DVCastScenario.node[38].veinsmobility  speed  ETV
+vector 271  DVCastScenario.node[38].veinsmobility  acceleration  ETV
+vector 272  DVCastScenario.node[38].veinsmobility  co2emission  ETV
+vector 275  DVCastScenario.node[39].veinsmobility  posx  ETV
+vector 276  DVCastScenario.node[39].veinsmobility  posy  ETV
+vector 277  DVCastScenario.node[39].veinsmobility  speed  ETV
+vector 278  DVCastScenario.node[39].veinsmobility  acceleration  ETV
+vector 279  DVCastScenario.node[39].veinsmobility  co2emission  ETV
+vector 282  DVCastScenario.node[40].veinsmobility  posx  ETV
+vector 283  DVCastScenario.node[40].veinsmobility  posy  ETV
+vector 284  DVCastScenario.node[40].veinsmobility  speed  ETV
+vector 285  DVCastScenario.node[40].veinsmobility  acceleration  ETV
+vector 286  DVCastScenario.node[40].veinsmobility  co2emission  ETV
+vector 289  DVCastScenario.node[41].veinsmobility  posx  ETV
+vector 290  DVCastScenario.node[41].veinsmobility  posy  ETV
+vector 291  DVCastScenario.node[41].veinsmobility  speed  ETV
+vector 292  DVCastScenario.node[41].veinsmobility  acceleration  ETV
+vector 293  DVCastScenario.node[41].veinsmobility  co2emission  ETV
+vector 296  DVCastScenario.node[42].veinsmobility  posx  ETV
+vector 297  DVCastScenario.node[42].veinsmobility  posy  ETV
+vector 298  DVCastScenario.node[42].veinsmobility  speed  ETV
+vector 299  DVCastScenario.node[42].veinsmobility  acceleration  ETV
+vector 300  DVCastScenario.node[42].veinsmobility  co2emission  ETV
+vector 303  DVCastScenario.node[43].veinsmobility  posx  ETV
+vector 304  DVCastScenario.node[43].veinsmobility  posy  ETV
+vector 305  DVCastScenario.node[43].veinsmobility  speed  ETV
+vector 306  DVCastScenario.node[43].veinsmobility  acceleration  ETV
+vector 307  DVCastScenario.node[43].veinsmobility  co2emission  ETV
+vector 310  DVCastScenario.node[44].veinsmobility  posx  ETV
+vector 311  DVCastScenario.node[44].veinsmobility  posy  ETV
+vector 312  DVCastScenario.node[44].veinsmobility  speed  ETV
+vector 313  DVCastScenario.node[44].veinsmobility  acceleration  ETV
+vector 314  DVCastScenario.node[44].veinsmobility  co2emission  ETV
+vector 317  DVCastScenario.node[45].veinsmobility  posx  ETV
+vector 318  DVCastScenario.node[45].veinsmobility  posy  ETV
+vector 319  DVCastScenario.node[45].veinsmobility  speed  ETV
+vector 320  DVCastScenario.node[45].veinsmobility  acceleration  ETV
+vector 321  DVCastScenario.node[45].veinsmobility  co2emission  ETV
+vector 324  DVCastScenario.node[46].veinsmobility  posx  ETV
+vector 325  DVCastScenario.node[46].veinsmobility  posy  ETV
+vector 326  DVCastScenario.node[46].veinsmobility  speed  ETV
+vector 327  DVCastScenario.node[46].veinsmobility  acceleration  ETV
+vector 328  DVCastScenario.node[46].veinsmobility  co2emission  ETV
+vector 331  DVCastScenario.node[47].veinsmobility  posx  ETV
+vector 332  DVCastScenario.node[47].veinsmobility  posy  ETV
+vector 333  DVCastScenario.node[47].veinsmobility  speed  ETV
+vector 334  DVCastScenario.node[47].veinsmobility  acceleration  ETV
+vector 335  DVCastScenario.node[47].veinsmobility  co2emission  ETV
+vector 338  DVCastScenario.node[48].veinsmobility  posx  ETV
+vector 339  DVCastScenario.node[48].veinsmobility  posy  ETV
+vector 345  DVCastScenario.node[49].veinsmobility  posx  ETV
+vector 346  DVCastScenario.node[49].veinsmobility  posy  ETV
+vector 340  DVCastScenario.node[48].veinsmobility  speed  ETV
+vector 341  DVCastScenario.node[48].veinsmobility  acceleration  ETV
+vector 342  DVCastScenario.node[48].veinsmobility  co2emission  ETV
+vector 347  DVCastScenario.node[49].veinsmobility  speed  ETV
+vector 348  DVCastScenario.node[49].veinsmobility  acceleration  ETV
+vector 349  DVCastScenario.node[49].veinsmobility  co2emission  ETV
+vector 352  DVCastScenario.node[50].veinsmobility  posx  ETV
+vector 353  DVCastScenario.node[50].veinsmobility  posy  ETV
+vector 354  DVCastScenario.node[50].veinsmobility  speed  ETV
+vector 355  DVCastScenario.node[50].veinsmobility  acceleration  ETV
+vector 356  DVCastScenario.node[50].veinsmobility  co2emission  ETV
+vector 359  DVCastScenario.node[51].veinsmobility  posx  ETV
+vector 360  DVCastScenario.node[51].veinsmobility  posy  ETV
+vector 361  DVCastScenario.node[51].veinsmobility  speed  ETV
+vector 362  DVCastScenario.node[51].veinsmobility  acceleration  ETV
+vector 363  DVCastScenario.node[51].veinsmobility  co2emission  ETV
+vector 366  DVCastScenario.node[52].veinsmobility  posx  ETV
+vector 367  DVCastScenario.node[52].veinsmobility  posy  ETV
+vector 368  DVCastScenario.node[52].veinsmobility  speed  ETV
+vector 369  DVCastScenario.node[52].veinsmobility  acceleration  ETV
+vector 370  DVCastScenario.node[52].veinsmobility  co2emission  ETV
+vector 373  DVCastScenario.node[53].veinsmobility  posx  ETV
+vector 374  DVCastScenario.node[53].veinsmobility  posy  ETV
+vector 375  DVCastScenario.node[53].veinsmobility  speed  ETV
+vector 376  DVCastScenario.node[53].veinsmobility  acceleration  ETV
+vector 377  DVCastScenario.node[53].veinsmobility  co2emission  ETV
+vector 380  DVCastScenario.node[54].veinsmobility  posx  ETV
+vector 381  DVCastScenario.node[54].veinsmobility  posy  ETV
+vector 382  DVCastScenario.node[54].veinsmobility  speed  ETV
+vector 383  DVCastScenario.node[54].veinsmobility  acceleration  ETV
+vector 384  DVCastScenario.node[54].veinsmobility  co2emission  ETV
+vector 387  DVCastScenario.node[55].veinsmobility  posx  ETV
+vector 388  DVCastScenario.node[55].veinsmobility  posy  ETV
+vector 389  DVCastScenario.node[55].veinsmobility  speed  ETV
+vector 390  DVCastScenario.node[55].veinsmobility  acceleration  ETV
+vector 391  DVCastScenario.node[55].veinsmobility  co2emission  ETV
+vector 394  DVCastScenario.node[56].veinsmobility  posx  ETV
+vector 395  DVCastScenario.node[56].veinsmobility  posy  ETV
+vector 396  DVCastScenario.node[56].veinsmobility  speed  ETV
+vector 397  DVCastScenario.node[56].veinsmobility  acceleration  ETV
+vector 398  DVCastScenario.node[56].veinsmobility  co2emission  ETV
+vector 401  DVCastScenario.node[57].veinsmobility  posx  ETV
+vector 402  DVCastScenario.node[57].veinsmobility  posy  ETV
+vector 403  DVCastScenario.node[57].veinsmobility  speed  ETV
+vector 404  DVCastScenario.node[57].veinsmobility  acceleration  ETV
+vector 405  DVCastScenario.node[57].veinsmobility  co2emission  ETV
+vector 408  DVCastScenario.node[58].veinsmobility  posx  ETV
+vector 409  DVCastScenario.node[58].veinsmobility  posy  ETV
+vector 410  DVCastScenario.node[58].veinsmobility  speed  ETV
+vector 411  DVCastScenario.node[58].veinsmobility  acceleration  ETV
+vector 412  DVCastScenario.node[58].veinsmobility  co2emission  ETV
+vector 415  DVCastScenario.node[59].veinsmobility  posx  ETV
+vector 416  DVCastScenario.node[59].veinsmobility  posy  ETV
+vector 417  DVCastScenario.node[59].veinsmobility  speed  ETV
+vector 418  DVCastScenario.node[59].veinsmobility  acceleration  ETV
+vector 419  DVCastScenario.node[59].veinsmobility  co2emission  ETV
+vector 422  DVCastScenario.node[60].veinsmobility  posx  ETV
+vector 423  DVCastScenario.node[60].veinsmobility  posy  ETV
+vector 424  DVCastScenario.node[60].veinsmobility  speed  ETV
+vector 425  DVCastScenario.node[60].veinsmobility  acceleration  ETV
+vector 426  DVCastScenario.node[60].veinsmobility  co2emission  ETV
+vector 429  DVCastScenario.node[61].veinsmobility  posx  ETV
+vector 430  DVCastScenario.node[61].veinsmobility  posy  ETV
+vector 431  DVCastScenario.node[61].veinsmobility  speed  ETV
+vector 432  DVCastScenario.node[61].veinsmobility  acceleration  ETV
+vector 433  DVCastScenario.node[61].veinsmobility  co2emission  ETV
+vector 436  DVCastScenario.node[62].veinsmobility  posx  ETV
+vector 437  DVCastScenario.node[62].veinsmobility  posy  ETV
+vector 438  DVCastScenario.node[62].veinsmobility  speed  ETV
+vector 439  DVCastScenario.node[62].veinsmobility  acceleration  ETV
+vector 440  DVCastScenario.node[62].veinsmobility  co2emission  ETV
+vector 443  DVCastScenario.node[63].veinsmobility  posx  ETV
+vector 444  DVCastScenario.node[63].veinsmobility  posy  ETV
+vector 445  DVCastScenario.node[63].veinsmobility  speed  ETV
+vector 446  DVCastScenario.node[63].veinsmobility  acceleration  ETV
+vector 447  DVCastScenario.node[63].veinsmobility  co2emission  ETV
+vector 450  DVCastScenario.node[64].veinsmobility  posx  ETV
+vector 451  DVCastScenario.node[64].veinsmobility  posy  ETV
+vector 452  DVCastScenario.node[64].veinsmobility  speed  ETV
+vector 453  DVCastScenario.node[64].veinsmobility  acceleration  ETV
+vector 454  DVCastScenario.node[64].veinsmobility  co2emission  ETV
+vector 457  DVCastScenario.node[65].veinsmobility  posx  ETV
+vector 458  DVCastScenario.node[65].veinsmobility  posy  ETV
+vector 459  DVCastScenario.node[65].veinsmobility  speed  ETV
+vector 460  DVCastScenario.node[65].veinsmobility  acceleration  ETV
+vector 461  DVCastScenario.node[65].veinsmobility  co2emission  ETV
+vector 464  DVCastScenario.node[66].veinsmobility  posx  ETV
+vector 465  DVCastScenario.node[66].veinsmobility  posy  ETV
+vector 466  DVCastScenario.node[66].veinsmobility  speed  ETV
+vector 467  DVCastScenario.node[66].veinsmobility  acceleration  ETV
+vector 468  DVCastScenario.node[66].veinsmobility  co2emission  ETV
+vector 471  DVCastScenario.node[67].veinsmobility  posx  ETV
+vector 472  DVCastScenario.node[67].veinsmobility  posy  ETV
+vector 473  DVCastScenario.node[67].veinsmobility  speed  ETV
+vector 474  DVCastScenario.node[67].veinsmobility  acceleration  ETV
+vector 475  DVCastScenario.node[67].veinsmobility  co2emission  ETV
+vector 478  DVCastScenario.node[68].veinsmobility  posx  ETV
+vector 479  DVCastScenario.node[68].veinsmobility  posy  ETV
+vector 480  DVCastScenario.node[68].veinsmobility  speed  ETV
+vector 481  DVCastScenario.node[68].veinsmobility  acceleration  ETV
+vector 482  DVCastScenario.node[68].veinsmobility  co2emission  ETV
+vector 485  DVCastScenario.node[69].veinsmobility  posx  ETV
+vector 486  DVCastScenario.node[69].veinsmobility  posy  ETV
+vector 487  DVCastScenario.node[69].veinsmobility  speed  ETV
+vector 488  DVCastScenario.node[69].veinsmobility  acceleration  ETV
+vector 489  DVCastScenario.node[69].veinsmobility  co2emission  ETV
+vector 492  DVCastScenario.node[70].veinsmobility  posx  ETV
+vector 493  DVCastScenario.node[70].veinsmobility  posy  ETV
+vector 494  DVCastScenario.node[70].veinsmobility  speed  ETV
+vector 495  DVCastScenario.node[70].veinsmobility  acceleration  ETV
+vector 496  DVCastScenario.node[70].veinsmobility  co2emission  ETV
+vector 499  DVCastScenario.node[71].veinsmobility  posx  ETV
+vector 500  DVCastScenario.node[71].veinsmobility  posy  ETV
+vector 501  DVCastScenario.node[71].veinsmobility  speed  ETV
+vector 502  DVCastScenario.node[71].veinsmobility  acceleration  ETV
+vector 503  DVCastScenario.node[71].veinsmobility  co2emission  ETV
+vector 506  DVCastScenario.node[72].veinsmobility  posx  ETV
+vector 507  DVCastScenario.node[72].veinsmobility  posy  ETV
+vector 508  DVCastScenario.node[72].veinsmobility  speed  ETV
+vector 509  DVCastScenario.node[72].veinsmobility  acceleration  ETV
+vector 510  DVCastScenario.node[72].veinsmobility  co2emission  ETV
+vector 513  DVCastScenario.node[73].veinsmobility  posx  ETV
+vector 514  DVCastScenario.node[73].veinsmobility  posy  ETV
+vector 515  DVCastScenario.node[73].veinsmobility  speed  ETV
+vector 516  DVCastScenario.node[73].veinsmobility  acceleration  ETV
+vector 517  DVCastScenario.node[73].veinsmobility  co2emission  ETV
+vector 520  DVCastScenario.node[74].veinsmobility  posx  ETV
+vector 521  DVCastScenario.node[74].veinsmobility  posy  ETV
+vector 522  DVCastScenario.node[74].veinsmobility  speed  ETV
+vector 523  DVCastScenario.node[74].veinsmobility  acceleration  ETV
+vector 524  DVCastScenario.node[74].veinsmobility  co2emission  ETV
+vector 527  DVCastScenario.node[75].veinsmobility  posx  ETV
+vector 528  DVCastScenario.node[75].veinsmobility  posy  ETV
+vector 529  DVCastScenario.node[75].veinsmobility  speed  ETV
+vector 530  DVCastScenario.node[75].veinsmobility  acceleration  ETV
+vector 531  DVCastScenario.node[75].veinsmobility  co2emission  ETV
+vector 534  DVCastScenario.node[76].veinsmobility  posx  ETV
+vector 535  DVCastScenario.node[76].veinsmobility  posy  ETV
+vector 536  DVCastScenario.node[76].veinsmobility  speed  ETV
+vector 537  DVCastScenario.node[76].veinsmobility  acceleration  ETV
+vector 538  DVCastScenario.node[76].veinsmobility  co2emission  ETV
+vector 541  DVCastScenario.node[77].veinsmobility  posx  ETV
+vector 542  DVCastScenario.node[77].veinsmobility  posy  ETV
+vector 543  DVCastScenario.node[77].veinsmobility  speed  ETV
+vector 544  DVCastScenario.node[77].veinsmobility  acceleration  ETV
+vector 545  DVCastScenario.node[77].veinsmobility  co2emission  ETV
+vector 548  DVCastScenario.node[78].veinsmobility  posx  ETV
+vector 549  DVCastScenario.node[78].veinsmobility  posy  ETV
+vector 550  DVCastScenario.node[78].veinsmobility  speed  ETV
+vector 551  DVCastScenario.node[78].veinsmobility  acceleration  ETV
+vector 552  DVCastScenario.node[78].veinsmobility  co2emission  ETV
+20	28156 27395 48 11451 2.3 105.4 1032 0.29791659006891 15.990654580272 3379.8816812198 18063.102651535
+19	55551 31375 48 11451 2.3 105.4 1032 -4.3207747183105 2.6 219.14550221846 1827.1355318084
+18	86926 30370 47 11451 2.2 105.4 1033 0.25973716081143 22.218910891963 13770.661270295 210170.13870698
+17	117296 30409 38 11451 2.1 105.4 1034 8328.1632424503 8809.8167039229 8939050.4829442 77308915392.586
+16	147705 30375 38 11451 2.1 105.4 1034 6092.2270371211 6584.2804049092 6545149.7328908 41466858108.054
+314	178080 33851 2282 26796 53.3 164.1 1109 -1.7509467625353 22.829665222514 5719.2016993346 47738.632856103
+313	211931 36332 2282 26796 53.3 164.1 1109 -4.5 2.6 265.45833913564 2178.7023544075
+312	248263 35368 2247 26796 53.2 164.1 1110 0.25301005553524 31.288648061955 24658.105953579 618962.86294965
+311	283631 35385 2220 26796 53.1 164.1 1111 11515.192230579 12015.219126392 13027877.766471 152803584139.24
+310	319016 35397 2220 26796 53.1 164.1 1111 4302.0681452454 6525.3983478261 6287019.2267301 36161568785.592
+398	354413 34266 3736 30402 65.3 177.1 1119 0.30371419775545 15.838770487014 4367.0166052777 25404.922711233
+397	388679 37518 3736 30402 65.3 177.1 1119 -1.226866043522 2.5567894622218 219.25511741297 721.70347405266
+396	426197 35930 3715 30402 65.2 177.1 1120 0.25245682551409 22.219502273095 23601.614603053 513590.13747543
+395	462127 35950 3688 30402 65.1 177.1 1121 9084.838300881 11442.135515166 11440913.360652 117331089434.13
+394	498077 35956 3688 30402 65.1 177.1 1121 6525.8814001365 6569.4974687199 7339316.8864306 48051553710.653
+188	534033 43631 870 30495 31.3 178.3 1471 -1.4827424988489 23.517661453079 6473.7194893751 52768.370513088
+187	577664 47576 870 30495 31.3 178.3 1471 -4.5 2.6 135.79986996198 3395.5582421069
+186	625240 46711 869 30495 31.2 178.3 1472 0.25867306751059 31.289774097628 27971.057899995 618760.15056807
+185	671951 46733 860 30495 31.1 178.3 1473 11609.415134072 12468.082808711 17603691.466319 210466665568.89
+184	718684 46727 860 30495 31.1 178.3 1473 4668.9802939502 6517.2335877951 8528204.7735051 50108806285.477
+125	765411 46425 406 31002 18.3 180.4 1622 0.31171785328957 16.10685881245 6217.7750037492 40035.99028365
+124	811836 52092 406 31002 18.3 180.4 1622 -4.5 2.6 136.17070811715 4909.7030814037
+123	863928 51267 405 31002 18.2 180.4 1623 0.25149693494407 22.219553360699 23878.913518419 423945.9012316
+122	915195 51292 388 31002 18.1 180.4 1624 11297.890649394 12282.915368367 18985821.225321 222067920290.43
+121	966487 51275 388 31002 18.1 180.4 1624 6505.6231428455 7656.7919434166 10970040.512814 74315906221.704
+230	1017762 43836 1140 32717 37.3 187.1 1499 0.26155308299538 15.449442227731 4594.1359103491 22600.792695165
+229	1061598 49780 1140 32717 37.3 187.1 1499 -4.3019231618423 2.6 136.34654762563 1666.3798654649
+228	1111378 47787 1131 32717 37.2 187.1 1500 0.24963590741693 22.219845001712 23094.938333883 385741.61158912
+227	1159165 47807 1122 32717 37.1 187.1 1501 9106.6741021663 10377.939329383 14979629.09313 149752402493.08
+226	1206972 47820 1122 32717 37.1 187.1 1501 3135.229295666 4112.9413685855 5111391.3030862 17508722974.59
+258	1254792 47204 1452 36505 42.3 200 1578 -0.57942794671132 19.193766824506 7079.0957367237 52461.890022666
+257	1301996 51998 1452 36505 42.3 200 1578 -4.5 2.6 219.33236196809 3272.6234203477
+256	1353994 50466 1451 36505 42.2 200 1579 0.25006971110404 26.819443382283 31388.12127452 672662.98832921
+255	1404460 50502 1442 36505 42.1 200 1580 10362.862451182 12004.656462078 17627924.672079 197389839575.54
+254	1454962 50507 1442 36505 42.1 200 1580 3242.7046160402 4115.3745225843 5429503.8263835 18739453811.191
+307	1505469 47537 2166 36738 52.3 201.5 1493 -1.7799975308485 24.42967111881 9033.1757054141 81364.444045247
+306	1553006 49984 2166 36738 52.3 201.5 1493 -1.2197160135955 2.559762566397 309.84699659833 1004.6935430488
+305	1602990 47921 2149 36738 52.2 201.5 1494 0.25959302961896 31.289799459716 44233.752139633 1355289.9536275
+304	1650911 47931 2106 36738 52.1 201.5 1495 10798.74712076 15163.30247984 19569559.564393 258770008840.61
+303	1698842 47913 2106 36738 52.1 201.5 1495 4347.2381770995 4864.5655633736 7001715.1974961 32825461062.718
