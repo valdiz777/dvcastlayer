@@ -1,0 +1,434 @@
+version 2
+run General-0-20170416-03:55:56-11000
+attr configname General
+attr datetime 20170416-03:55:56
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvars2 $repetition=0
+attr measurement ""
+attr network DVCastScenario
+attr processid 11000
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.coreDebug false
+param **.debug false
+param *.**.nic.mac1609_4.bitrate 18Mbps
+param *.**.nic.mac1609_4.txPower 20mW
+param *.**.nic.mac1609_4.useServiceChannel false
+param *.**.nic.phy80211p.analogueModels "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.decider "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.sensitivity -89dBm
+param *.**.nic.phy80211p.thermalNoise -110dBm
+param *.**.nic.phy80211p.usePropagationDelay true
+param *.**.nic.phy80211p.useThermalNoise true
+param *.annotations.draw false
+param *.connectionManager.alpha 2.0
+param *.connectionManager.carrierFrequency "5.890e9 Hz"
+param *.connectionManager.pMax 20mW
+param *.connectionManager.sat -89dBm
+param *.connectionManager.sendDirect true
+param *.manager.autoShutdown true
+param *.manager.host "\"localhost\""
+param *.manager.launchConfig "xmldoc(\"uah.launchd.xml\")"
+param *.manager.margin 25
+param *.manager.moduleDisplayString "\"\""
+param *.manager.moduleName "\"node\""
+param *.manager.moduleType "\"org.car2x.veins.nodes.Car\""
+param *.manager.port 9999
+param *.manager.updateInterval 0.1s
+param *.node[*0].veinsmobility.accidentCount 1
+param *.node[*0].veinsmobility.accidentDuration 30s
+param *.node[*0].veinsmobility.accidentStart 75s
+param *.node[*].appl.beaconInterval 1s
+param *.node[*].appl.beaconPriority 3
+param *.node[*].appl.dataOnSch false
+param *.node[*].appl.dataPriority 2
+param *.node[*].appl.debug false
+param *.node[*].appl.headerLength "256 bit"
+param *.node[*].appl.maxOffset 0.005s
+param *.node[*].appl.sendBeacons false
+param *.node[*].appl.sendData true
+param *.node[*].applType "\"DVCastLayer\""
+param *.node[*].mobilityType "\"TraCIMobility\""
+param *.node[*].mobilityType.debug true
+param *.node[*].veinsmobility.x 0
+param *.node[*].veinsmobility.y 0
+param *.node[*].veinsmobility.z 1.895
+param *.node[*].veinsmobilityType "\"org.car2x.veins.modules.mobility.traci.TraCIMobility\""
+param *.node[*].veinsmobilityType.debug true
+param *.playgroundSizeX 20000m
+param *.playgroundSizeY 20000m
+param *.playgroundSizeZ 5000m
+param *.rsu[*].appl.beaconInterval 1s
+param *.rsu[*].appl.beaconPriority 3
+param *.rsu[*].appl.dataOnSch false
+param *.rsu[*].appl.dataPriority 2
+param *.rsu[*].appl.debug false
+param *.rsu[*].appl.headerLength "256 bit"
+param *.rsu[*].appl.maxOffset 0.005s
+param *.rsu[*].appl.sendBeacons false
+param *.rsu[*].appl.sendData true
+param *.rsu[*].applType "\"TraCIDemoRSU11p\""
+param *.rsu[0].mobility.x 2000
+param *.rsu[0].mobility.y 2000
+param *.rsu[0].mobility.z 3
+param *.world.use2D false
+param *.world.useTorus false
+
+scalar DVCastScenario.node[7].nic.phy80211p 	busyTime 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	ReceivedBroadcasts 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	SentPackets 	2
+scalar DVCastScenario.node[7].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	TimesIntoBackoff 	2
+scalar DVCastScenario.node[7].nic.mac1609_4 	SlotsBackoff 	3
+scalar DVCastScenario.node[7].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[7].nic.mac1609_4 	totalBusyTime 	0.000146
+scalar DVCastScenario.node[7].veinsmobility 	startTime 	8.1
+scalar DVCastScenario.node[7].veinsmobility 	totalTime 	30.6
+scalar DVCastScenario.node[7].veinsmobility 	stopTime 	38.8
+scalar DVCastScenario.node[7].veinsmobility 	minSpeed 	0.25389976076828
+scalar DVCastScenario.node[7].veinsmobility 	maxSpeed 	13.889283642636
+scalar DVCastScenario.node[7].veinsmobility 	totalDistance 	298.35415434523
+scalar DVCastScenario.node[7].veinsmobility 	totalCO2Emission 	104.34721549989
+scalar DVCastScenario.node[1].nic.phy80211p 	busyTime 	3.4132138857783e-005
+scalar DVCastScenario.node[1].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	ReceivedBroadcasts 	41
+scalar DVCastScenario.node[1].nic.mac1609_4 	SentPackets 	6
+scalar DVCastScenario.node[1].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	TimesIntoBackoff 	6
+scalar DVCastScenario.node[1].nic.mac1609_4 	SlotsBackoff 	13
+scalar DVCastScenario.node[1].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[1].nic.mac1609_4 	totalBusyTime 	0.003534
+scalar DVCastScenario.node[1].veinsmobility 	startTime 	2.1
+scalar DVCastScenario.node[1].veinsmobility 	totalTime 	89.2
+scalar DVCastScenario.node[1].veinsmobility 	stopTime 	91.4
+scalar DVCastScenario.node[1].veinsmobility 	minSpeed 	9.423602950799e-008
+scalar DVCastScenario.node[1].veinsmobility 	maxSpeed 	13.889729095947
+scalar DVCastScenario.node[1].veinsmobility 	totalDistance 	531.01117841998
+scalar DVCastScenario.node[1].veinsmobility 	totalCO2Emission 	183.30199678047
+scalar DVCastScenario.node[12].nic.phy80211p 	busyTime 	1.4190871369295e-005
+scalar DVCastScenario.node[12].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	ReceivedBroadcasts 	19
+scalar DVCastScenario.node[12].nic.mac1609_4 	SentPackets 	13
+scalar DVCastScenario.node[12].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	TimesIntoBackoff 	13
+scalar DVCastScenario.node[12].nic.mac1609_4 	SlotsBackoff 	15
+scalar DVCastScenario.node[12].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[12].nic.mac1609_4 	totalBusyTime 	0.002317
+scalar DVCastScenario.node[12].veinsmobility 	startTime 	15.1
+scalar DVCastScenario.node[12].veinsmobility 	totalTime 	96.3
+scalar DVCastScenario.node[12].veinsmobility 	stopTime 	111.5
+scalar DVCastScenario.node[12].veinsmobility 	minSpeed 	0.25596504926798
+scalar DVCastScenario.node[12].veinsmobility 	maxSpeed 	17.879763465817
+scalar DVCastScenario.node[12].veinsmobility 	totalDistance 	1537.8106009289
+scalar DVCastScenario.node[12].veinsmobility 	totalCO2Emission 	320.65417723267
+scalar DVCastScenario.node[0].nic.phy80211p 	busyTime 	1.0030737690107e-005
+scalar DVCastScenario.node[0].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	ReceivedBroadcasts 	16
+scalar DVCastScenario.node[0].nic.mac1609_4 	SentPackets 	11
+scalar DVCastScenario.node[0].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	TimesIntoBackoff 	11
+scalar DVCastScenario.node[0].nic.mac1609_4 	SlotsBackoff 	15
+scalar DVCastScenario.node[0].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[0].nic.mac1609_4 	totalBusyTime 	0.002147
+scalar DVCastScenario.node[0].veinsmobility 	startTime 	0.1
+scalar DVCastScenario.node[0].veinsmobility 	totalTime 	129.2
+scalar DVCastScenario.node[0].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[0].veinsmobility 	minSpeed 	0
+scalar DVCastScenario.node[0].veinsmobility 	maxSpeed 	13.889394871634
+scalar DVCastScenario.node[0].veinsmobility 	totalDistance 	988.00343349787
+scalar DVCastScenario.node[0].veinsmobility 	totalCO2Emission 	265.32491260921
+scalar DVCastScenario.node[9].nic.phy80211p 	busyTime 	3.9462140338354e-005
+scalar DVCastScenario.node[9].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	ReceivedBroadcasts 	61
+scalar DVCastScenario.node[9].nic.mac1609_4 	SentPackets 	12
+scalar DVCastScenario.node[9].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	TimesIntoBackoff 	12
+scalar DVCastScenario.node[9].nic.mac1609_4 	SlotsBackoff 	23
+scalar DVCastScenario.node[9].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[9].nic.mac1609_4 	totalBusyTime 	0.005556
+scalar DVCastScenario.node[9].veinsmobility 	startTime 	10.1
+scalar DVCastScenario.node[9].veinsmobility 	totalTime 	119.2
+scalar DVCastScenario.node[9].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[9].veinsmobility 	minSpeed 	0.25800197405485
+scalar DVCastScenario.node[9].veinsmobility 	maxSpeed 	27.779767327376
+scalar DVCastScenario.node[9].veinsmobility 	totalDistance 	1262.6213947687
+scalar DVCastScenario.node[9].veinsmobility 	totalCO2Emission 	407.56591428164
+scalar DVCastScenario.node[10].nic.phy80211p 	busyTime 	5.7131711509423e-005
+scalar DVCastScenario.node[10].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	ReceivedBroadcasts 	89
+scalar DVCastScenario.node[10].nic.mac1609_4 	SentPackets 	13
+scalar DVCastScenario.node[10].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	TimesIntoBackoff 	13
+scalar DVCastScenario.node[10].nic.mac1609_4 	SlotsBackoff 	17
+scalar DVCastScenario.node[10].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[10].nic.mac1609_4 	totalBusyTime 	0.007693
+scalar DVCastScenario.node[10].veinsmobility 	startTime 	12.1
+scalar DVCastScenario.node[10].veinsmobility 	totalTime 	117.2
+scalar DVCastScenario.node[10].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[10].veinsmobility 	minSpeed 	0
+scalar DVCastScenario.node[10].veinsmobility 	maxSpeed 	27.777304404292
+scalar DVCastScenario.node[10].veinsmobility 	totalDistance 	1407.282872444
+scalar DVCastScenario.node[10].veinsmobility 	totalCO2Emission 	494.30495676094
+scalar DVCastScenario.node[11].nic.phy80211p 	busyTime 	5.0623743084501e-005
+scalar DVCastScenario.node[11].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	ReceivedBroadcasts 	79
+scalar DVCastScenario.node[11].nic.mac1609_4 	SentPackets 	15
+scalar DVCastScenario.node[11].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	TimesIntoBackoff 	15
+scalar DVCastScenario.node[11].nic.mac1609_4 	SlotsBackoff 	24
+scalar DVCastScenario.node[11].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[11].nic.mac1609_4 	totalBusyTime 	0.006975
+scalar DVCastScenario.node[11].veinsmobility 	startTime 	14.1
+scalar DVCastScenario.node[11].veinsmobility 	totalTime 	115.2
+scalar DVCastScenario.node[11].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[11].veinsmobility 	minSpeed 	0.24781530326931
+scalar DVCastScenario.node[11].veinsmobility 	maxSpeed 	27.778944003927
+scalar DVCastScenario.node[11].veinsmobility 	totalDistance 	1556.666341207
+scalar DVCastScenario.node[11].veinsmobility 	totalCO2Emission 	488.40002487498
+scalar DVCastScenario.node[13].nic.phy80211p 	busyTime 	5.3638220681703e-005
+scalar DVCastScenario.node[13].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	ReceivedBroadcasts 	81
+scalar DVCastScenario.node[13].nic.mac1609_4 	SentPackets 	11
+scalar DVCastScenario.node[13].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	TimesIntoBackoff 	11
+scalar DVCastScenario.node[13].nic.mac1609_4 	SlotsBackoff 	18
+scalar DVCastScenario.node[13].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[13].nic.mac1609_4 	totalBusyTime 	0.006923
+scalar DVCastScenario.node[13].veinsmobility 	startTime 	16.1
+scalar DVCastScenario.node[13].veinsmobility 	totalTime 	113.2
+scalar DVCastScenario.node[13].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[13].veinsmobility 	minSpeed 	0.25861641763756
+scalar DVCastScenario.node[13].veinsmobility 	maxSpeed 	27.760756184927
+scalar DVCastScenario.node[13].veinsmobility 	totalDistance 	1215.5745566778
+scalar DVCastScenario.node[13].veinsmobility 	totalCO2Emission 	342.55852693417
+scalar DVCastScenario.node[14].nic.phy80211p 	busyTime 	5.2191182888249e-005
+scalar DVCastScenario.node[14].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	ReceivedBroadcasts 	78
+scalar DVCastScenario.node[14].nic.mac1609_4 	SentPackets 	15
+scalar DVCastScenario.node[14].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	TimesIntoBackoff 	15
+scalar DVCastScenario.node[14].nic.mac1609_4 	SlotsBackoff 	27
+scalar DVCastScenario.node[14].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[14].nic.mac1609_4 	totalBusyTime 	0.006999
+scalar DVCastScenario.node[14].veinsmobility 	startTime 	17.1
+scalar DVCastScenario.node[14].veinsmobility 	totalTime 	112.2
+scalar DVCastScenario.node[14].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[14].veinsmobility 	minSpeed 	0.24721545893699
+scalar DVCastScenario.node[14].veinsmobility 	maxSpeed 	27.779876849744
+scalar DVCastScenario.node[14].veinsmobility 	totalDistance 	1542.6422598732
+scalar DVCastScenario.node[14].veinsmobility 	totalCO2Emission 	514.94880219994
+scalar DVCastScenario.node[15].nic.phy80211p 	busyTime 	4.7480793102191e-005
+scalar DVCastScenario.node[15].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	ReceivedBroadcasts 	70
+scalar DVCastScenario.node[15].nic.mac1609_4 	SentPackets 	19
+scalar DVCastScenario.node[15].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	TimesIntoBackoff 	19
+scalar DVCastScenario.node[15].nic.mac1609_4 	SlotsBackoff 	24
+scalar DVCastScenario.node[15].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[15].nic.mac1609_4 	totalBusyTime 	0.006667
+scalar DVCastScenario.node[15].veinsmobility 	startTime 	18.1
+scalar DVCastScenario.node[15].veinsmobility 	totalTime 	111.2
+scalar DVCastScenario.node[15].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[15].veinsmobility 	minSpeed 	0.24815443692124
+scalar DVCastScenario.node[15].veinsmobility 	maxSpeed 	27.779781015315
+scalar DVCastScenario.node[15].veinsmobility 	totalDistance 	2162.0161398121
+scalar DVCastScenario.node[15].veinsmobility 	totalCO2Emission 	523.39695999912
+scalar DVCastScenario.node[16].nic.phy80211p 	busyTime 	5.1396125173567e-005
+scalar DVCastScenario.node[16].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	ReceivedBroadcasts 	76
+scalar DVCastScenario.node[16].nic.mac1609_4 	SentPackets 	10
+scalar DVCastScenario.node[16].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	TimesIntoBackoff 	9
+scalar DVCastScenario.node[16].nic.mac1609_4 	SlotsBackoff 	15
+scalar DVCastScenario.node[16].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[16].nic.mac1609_4 	totalBusyTime 	0.006369
+scalar DVCastScenario.node[16].veinsmobility 	startTime 	19.1
+scalar DVCastScenario.node[16].veinsmobility 	totalTime 	110.2
+scalar DVCastScenario.node[16].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[16].veinsmobility 	minSpeed 	0.25674482319411
+scalar DVCastScenario.node[16].veinsmobility 	maxSpeed 	13.889732621501
+scalar DVCastScenario.node[16].veinsmobility 	totalDistance 	873.86458965218
+scalar DVCastScenario.node[16].veinsmobility 	totalCO2Emission 	260.90033571628
+scalar DVCastScenario.node[2].nic.phy80211p 	busyTime 	3.9745533421205e-005
+scalar DVCastScenario.node[2].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	ReceivedBroadcasts 	67
+scalar DVCastScenario.node[2].nic.mac1609_4 	SentPackets 	10
+scalar DVCastScenario.node[2].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	TimesIntoBackoff 	10
+scalar DVCastScenario.node[2].nic.mac1609_4 	SlotsBackoff 	26
+scalar DVCastScenario.node[2].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[2].nic.mac1609_4 	totalBusyTime 	0.005794
+scalar DVCastScenario.node[2].veinsmobility 	startTime 	3.1
+scalar DVCastScenario.node[2].veinsmobility 	totalTime 	126.2
+scalar DVCastScenario.node[2].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[2].veinsmobility 	minSpeed 	0.24961093867011
+scalar DVCastScenario.node[2].veinsmobility 	maxSpeed 	26.621114098092
+scalar DVCastScenario.node[2].veinsmobility 	totalDistance 	1016.3236782112
+scalar DVCastScenario.node[2].veinsmobility 	totalCO2Emission 	310.67798305657
+scalar DVCastScenario.node[3].nic.phy80211p 	busyTime 	4.6197027674572e-005
+scalar DVCastScenario.node[3].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	ReceivedBroadcasts 	77
+scalar DVCastScenario.node[3].nic.mac1609_4 	SentPackets 	15
+scalar DVCastScenario.node[3].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	TimesIntoBackoff 	15
+scalar DVCastScenario.node[3].nic.mac1609_4 	SlotsBackoff 	24
+scalar DVCastScenario.node[3].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[3].nic.mac1609_4 	totalBusyTime 	0.006927
+scalar DVCastScenario.node[3].veinsmobility 	startTime 	4.1
+scalar DVCastScenario.node[3].veinsmobility 	totalTime 	125.2
+scalar DVCastScenario.node[3].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[3].veinsmobility 	minSpeed 	0.25710982198827
+scalar DVCastScenario.node[3].veinsmobility 	maxSpeed 	27.779699752952
+scalar DVCastScenario.node[3].veinsmobility 	totalDistance 	1616.8844801983
+scalar DVCastScenario.node[3].veinsmobility 	totalCO2Emission 	498.81159908609
+scalar DVCastScenario.node[4].nic.phy80211p 	busyTime 	3.9612614315123e-005
+scalar DVCastScenario.node[4].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	ReceivedBroadcasts 	67
+scalar DVCastScenario.node[4].nic.mac1609_4 	SentPackets 	11
+scalar DVCastScenario.node[4].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	TimesIntoBackoff 	11
+scalar DVCastScenario.node[4].nic.mac1609_4 	SlotsBackoff 	18
+scalar DVCastScenario.node[4].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[4].nic.mac1609_4 	totalBusyTime 	0.005771
+scalar DVCastScenario.node[4].veinsmobility 	startTime 	5.1
+scalar DVCastScenario.node[4].veinsmobility 	totalTime 	124.2
+scalar DVCastScenario.node[4].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[4].veinsmobility 	minSpeed 	1.6158994171639e-010
+scalar DVCastScenario.node[4].veinsmobility 	maxSpeed 	25.272315182822
+scalar DVCastScenario.node[4].veinsmobility 	totalDistance 	1192.893516483
+scalar DVCastScenario.node[4].veinsmobility 	totalCO2Emission 	363.53187848134
+scalar DVCastScenario.node[5].nic.phy80211p 	busyTime 	2.0259269913811e-005
+scalar DVCastScenario.node[5].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	ReceivedBroadcasts 	34
+scalar DVCastScenario.node[5].nic.mac1609_4 	SentPackets 	12
+scalar DVCastScenario.node[5].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	TimesIntoBackoff 	12
+scalar DVCastScenario.node[5].nic.mac1609_4 	SlotsBackoff 	26
+scalar DVCastScenario.node[5].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[5].nic.mac1609_4 	totalBusyTime 	0.00342
+scalar DVCastScenario.node[5].veinsmobility 	startTime 	6.1
+scalar DVCastScenario.node[5].veinsmobility 	totalTime 	123.2
+scalar DVCastScenario.node[5].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[5].veinsmobility 	minSpeed 	0.25718131226883
+scalar DVCastScenario.node[5].veinsmobility 	maxSpeed 	26.048727345647
+scalar DVCastScenario.node[5].veinsmobility 	totalDistance 	1063.9374316888
+scalar DVCastScenario.node[5].veinsmobility 	totalCO2Emission 	352.58911880784
+scalar DVCastScenario.node[6].nic.phy80211p 	busyTime 	3.6529423213109e-005
+scalar DVCastScenario.node[6].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	ReceivedBroadcasts 	60
+scalar DVCastScenario.node[6].nic.mac1609_4 	SentPackets 	21
+scalar DVCastScenario.node[6].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	TimesIntoBackoff 	21
+scalar DVCastScenario.node[6].nic.mac1609_4 	SlotsBackoff 	39
+scalar DVCastScenario.node[6].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[6].nic.mac1609_4 	totalBusyTime 	0.006045
+scalar DVCastScenario.node[6].veinsmobility 	startTime 	7.1
+scalar DVCastScenario.node[6].veinsmobility 	totalTime 	122.2
+scalar DVCastScenario.node[6].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[6].veinsmobility 	minSpeed 	0.2541873700791
+scalar DVCastScenario.node[6].veinsmobility 	maxSpeed 	27.779854896194
+scalar DVCastScenario.node[6].veinsmobility 	totalDistance 	2409.2346993195
+scalar DVCastScenario.node[6].veinsmobility 	totalCO2Emission 	561.7295504293
+scalar DVCastScenario.node[8].nic.phy80211p 	busyTime 	3.5340257220936e-005
+scalar DVCastScenario.node[8].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	ReceivedBroadcasts 	57
+scalar DVCastScenario.node[8].nic.mac1609_4 	SentPackets 	21
+scalar DVCastScenario.node[8].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	TimesIntoBackoff 	21
+scalar DVCastScenario.node[8].nic.mac1609_4 	SlotsBackoff 	30
+scalar DVCastScenario.node[8].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.node[8].nic.mac1609_4 	totalBusyTime 	0.005781
+scalar DVCastScenario.node[8].veinsmobility 	startTime 	9.1
+scalar DVCastScenario.node[8].veinsmobility 	totalTime 	120.2
+scalar DVCastScenario.node[8].veinsmobility 	stopTime 	129.30286025206
+scalar DVCastScenario.node[8].veinsmobility 	minSpeed 	0.25201844261703
+scalar DVCastScenario.node[8].veinsmobility 	maxSpeed 	27.779792706172
+scalar DVCastScenario.node[8].veinsmobility 	totalDistance 	2416.0861728003
+scalar DVCastScenario.node[8].veinsmobility 	totalCO2Emission 	572.38940254186
+scalar DVCastScenario.rsu[0].nic.phy80211p 	busyTime 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	ReceivedUnicastPackets 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	ReceivedBroadcasts 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	SentPackets 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	SNIRLostPackets 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	RXTXLostPackets 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	TotalLostPackets 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	DroppedPacketsInMac 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	TooLittleTime 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	TimesIntoBackoff 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	SlotsBackoff 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	NumInternalContention 	0
+scalar DVCastScenario.rsu[0].nic.mac1609_4 	totalBusyTime 	0
