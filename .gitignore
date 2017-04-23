@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+# map files
+*.rou.xml
+*.net.xml

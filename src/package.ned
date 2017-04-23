@@ -1,3 +1,0 @@
-package dvcastlayer;
-
-@license(LGPL);
