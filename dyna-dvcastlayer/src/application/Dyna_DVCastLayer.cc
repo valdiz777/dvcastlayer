@@ -27,8 +27,9 @@
 using Veins::TraCIMobilityAccess;
 using Veins::AnnotationManagerAccess;
 
-const simsignalwrap_t Dyna_DVCastLayer::parkingStateChangedSignal = simsignalwrap_t(
-TRACI_SIGNAL_PARKING_CHANGE_NAME);
+const simsignalwrap_t Dyna_DVCastLayer::parkingStateChangedSignal =
+        simsignalwrap_t(
+        TRACI_SIGNAL_PARKING_CHANGE_NAME);
 
 // Utility functions
 void add_to_queue(std::deque<int> * TargetQueue, std::deque<int> * OtherQueue1,
@@ -38,7 +39,7 @@ bool contains(std::deque<int> * queue, int key);
 bool contains(std::map<int, std::string> delayedRB, int key);
 void remove(std::deque<int> * queue, int key);
 
-// chose cluster ROI
+// ROI = 2 * cluster Radius
 int clusterRadius = 250;
 
 Define_Module(Dyna_DVCastLayer);
@@ -308,7 +309,7 @@ void Dyna_DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
 
     MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
-    if (!NB_OPPOSITE.empty()){
+    if (!NB_OPPOSITE.empty()) {
         ODC = true;
     } else {
         ODC = false;
@@ -334,7 +335,10 @@ void Dyna_DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
                 sendMessage(x.second, -1, x.first);
             }
         }
-        delayedRB.empty();
+
+        while (!delayedRB.empty()) {
+            delayedRB.erase(delayedRB.begin());
+        }
         ODC = true;
     }
 }

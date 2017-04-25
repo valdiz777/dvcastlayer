@@ -38,8 +38,8 @@ bool contains(std::deque<int> * queue, int key);
 bool contains(std::map<int, std::string> delayedRB, int key);
 void remove(std::deque<int> * queue, int key);
 
-// chose cluster ROI
-int clusterRadius = 250;
+// ROI = 2 * clusterRadius
+int clusterRadius = 2500;
 
 Define_Module(DVCastLayer);
 void DVCastLayer::initialize(int stage) {
@@ -94,44 +94,39 @@ void DVCastLayer::onData(WaveShortMessage* wsm) {
         return;
     }
 
-    if (!contains(&rcvdMessages, wsm->getSerial())) {
-        // this is a new message, add to received message queue
-        rcvdMessages.push_back(wsm->getSerial());
-        if (!NB_OPPOSITE.empty()) {
-            if (NB_OPPOSITE.size() == 1
-                    && (NB_OPPOSITE.front() == wsm->getSenderAddress())) {
-                ODC = false;
-            }
-            ODC = true;
-        } else {
+    if (!NB_OPPOSITE.empty()) {
+        if (NB_OPPOSITE.size() == 1
+                && (NB_OPPOSITE.front() == wsm->getSenderAddress())) {
             ODC = false;
         }
+        ODC = true;
+    } else {
+        ODC = false;
+    }
 
-        Dflg = (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
-                true : false;
-        MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
+    Dflg = (wsm->getRecipientAddress() == getParentModule()->getIndex()) ?
+            true : false;
+    MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
-        EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
+    EV << "MDC:" << MDC << " ODC:" << ODC << " Dflg:" << Dflg << endl;
 
-        if (!MDC) {
-            // no broadcast suppression yet
-            if (ODC) {
-                sendMessage(wsm->getWsmData(), -1, wsm->getSerial());
-                sentMessages.push_back(wsm->getSerial());
-                if (!Dflg) {
-                    findHost()->getDisplayString().updateWith("r=16,pink");
-                    if (!contains(delayedRB, wsm->getSerial())) {
-                        delayedRB.insert(
-                                std::pair<int, std::string>(wsm->getSerial(),
-                                        wsm->getWsmData()));
-                    }
+    if (!MDC) {
+        // no broadcast suppression yet
+        if (ODC) {
+            sendMessage(wsm->getWsmData(), -1, wsm->getSerial());
+            if (!Dflg) {
+                findHost()->getDisplayString().updateWith("r=16,pink");
+                if (!contains(delayedRB, wsm->getSerial())) {
+                    delayedRB.insert(
+                            std::pair<int, std::string>(wsm->getSerial(),
+                                    wsm->getWsmData()));
                 }
-            } else {
-                findHost()->getDisplayString().updateWith("r=16,blue");
-                delayedRB.insert(
-                        std::pair<int, std::string>(wsm->getSerial(),
-                                wsm->getWsmData()));
             }
+        } else {
+            findHost()->getDisplayString().updateWith("r=16,blue");
+            delayedRB.insert(
+                    std::pair<int, std::string>(wsm->getSerial(),
+                            wsm->getWsmData()));
         }
     }
 }
@@ -178,17 +173,12 @@ void DVCastLayer::handleParkingUpdate(cObject* obj) {
 // send hellos evertime we move 50 meters in x or y
 void DVCastLayer::handlePositionUpdate(cObject* obj) {
     BaseWaveApplLayer::handlePositionUpdate(obj);
-    //sentAccidentMessage = (sentAccidentMessage) ? false : true;
 
-    dlastx += std::abs(mobility->getCurrentPosition().x - lastx);
-    dlasty += std::abs(mobility->getCurrentPosition().y - lasty);
-
-    if ((dlastx >= clusterRadius / 2) || (dlasty >= clusterRadius / 2)) {
+    // Send hello in 1Hz freqency
+    if (simTime() - lastDroveAt > 1) {
         DVCast* wsm = prepareHello("hello", beaconLengthBits, type_CCH,
                 beaconPriority, -1, 72);
         sendHello(wsm);
-        dlastx = (dlastx > clusterRadius / 2) ? 0 : dlastx;
-        dlasty = (dlasty > clusterRadius / 2) ? 0 : dlasty;
     }
 
     if (mobility->getSpeed() < 1) {
@@ -205,8 +195,6 @@ void DVCastLayer::handlePositionUpdate(cObject* obj) {
     } else {
         lastDroveAt = simTime();
     }
-    lastx = mobility->getCurrentPosition().x;
-    lasty = mobility->getCurrentPosition().y;
 }
 
 void DVCastLayer::sendWSM(WaveShortMessage* wsm) {
@@ -308,7 +296,7 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
 
     MDC = (NB_FRONT.empty() || NB_BACK.empty()) ? false : true;
 
-    if (!NB_OPPOSITE.empty()){
+    if (!NB_OPPOSITE.empty()) {
         ODC = true;
     } else {
         ODC = false;
@@ -333,8 +321,12 @@ void DVCastLayer::neigbors_tables(Coord senderPosition, int senderId,
             if (!MDC) { //verify MDC is still false
                 sendMessage(x.second, -1, x.first);
             }
+
         }
-        delayedRB.empty();
+        while (!delayedRB.empty())
+          {
+            delayedRB.erase(delayedRB.begin());
+          }
         ODC = true;
     }
 }

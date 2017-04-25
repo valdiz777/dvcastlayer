@@ -49,10 +49,6 @@ protected:
     AnnotationManager* annotations;
     simtime_t lastDroveAt;
 
-    double lasty = 0;
-    double lastx = 0;
-    double dlasty = 0;
-    double dlastx = 0;
     std::deque<int> NB_FRONT, NB_BACK, NB_OPPOSITE;
     std::deque<int> rcvdMessages;
     std::deque<int> sentMessages;
