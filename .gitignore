@@ -31,3 +31,9 @@
 # map files
 *.rou.xml
 *.net.xml
+
+# analysis files
+*.sca
+*.vci
+*.vec
+*.anf

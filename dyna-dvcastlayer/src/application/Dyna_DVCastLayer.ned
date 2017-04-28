@@ -27,7 +27,7 @@ import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 
 simple Dyna_DVCastLayer extends BaseWaveApplLayer
 {
-    @class(DVCastLayer);
+    @class(Dyna_DVCastLayer);
     @display("i=block/app2");
     bool sendWhileParking = default(false); //send messages when the car is parked
 }

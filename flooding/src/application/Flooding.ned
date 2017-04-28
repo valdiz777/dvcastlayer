@@ -27,7 +27,7 @@ import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 
 simple Flooding extends BaseWaveApplLayer
 {
-    @class(DVCastLayer);
+    @class(Flooding);
     @display("i=block/app2");
     bool sendWhileParking = default(false); //send messages when the car is parked
 }
